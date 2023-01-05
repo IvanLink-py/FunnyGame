@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Debug = System.Diagnostics.Debug;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerControl : MonoBehaviour
@@ -17,7 +16,7 @@ public class PlayerControl : MonoBehaviour
         _mainCamera = Camera.main;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         Movement();
         Aim();
@@ -28,13 +27,13 @@ public class PlayerControl : MonoBehaviour
         var diff = _mainCamera.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         diff.Normalize();
 
-        var rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
+        var targetRotation = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, targetRotation - 90);
     }
 
     private void Movement()
     {
         var control = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        _rigidbody2D.velocity = control * speed;
+        _rigidbody2D.AddForce(control * speed);
     }
 }

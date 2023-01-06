@@ -1,4 +1,5 @@
 using System;
+using GameObjects.Player;
 using UnityEditor.Search;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -6,6 +7,8 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
+
+    public static PlayerControl Player;
 
     [SerializeField] private GameObject bulletPrefab;
 

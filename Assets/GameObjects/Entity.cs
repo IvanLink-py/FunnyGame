@@ -11,6 +11,29 @@ public class Entity : MonoBehaviour
     {
         OnDamageTake(bullet.myInfo.damage);
     }
+    
+    public void OnMeleeHit(EnemyConrol enemy)
+    {
+        OnDamageTake(enemy.damage);
+    }
+    
+    protected Vector3 Forward
+    {
+        get
+        {
+            var z = transform.rotation.eulerAngles.z * Mathf.Deg2Rad + Mathf.PI / 2;
+            return Vector3.up * Mathf.Sin(z) + Vector3.right * Mathf.Cos(z);
+        }
+    }
+    
+    protected void LookAt(Vector3 pos)
+    {
+        var diff = pos - transform.position;
+        diff.Normalize();
+
+        var targetRotation = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, targetRotation - 90);
+    }
 
     private void OnDamageTake(float damage)
     {

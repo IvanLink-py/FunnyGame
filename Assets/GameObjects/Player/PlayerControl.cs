@@ -12,16 +12,7 @@ namespace GameObjects.Player
         private bool _canShoot;
 
         public GunInfo currentGun;
-
-        private Vector3 Forward
-        {
-            get
-            {
-                var z = transform.rotation.eulerAngles.z * Mathf.Deg2Rad + Mathf.PI / 2;
-                return Vector3.up * Mathf.Sin(z) + Vector3.right * Mathf.Cos(z);
-            }
-        }
-
+        
         private new void Start()
         {
             base.Start();
@@ -40,13 +31,9 @@ namespace GameObjects.Player
 
         private void Aim()
         {
-            var diff = _mainCamera.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-            diff.Normalize();
-
-            var targetRotation = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, targetRotation - 90);
+            LookAt(_mainCamera.ScreenToWorldPoint(Input.mousePosition));
         }
-
+        
         private void Movement()
         {
             var control = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));

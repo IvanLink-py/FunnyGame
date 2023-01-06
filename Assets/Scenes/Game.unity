@@ -603,6 +603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 180
+  currentGun: {fileID: 11400000, guid: 5a12c7a045f787142940d0d4f454613e, type: 2}
 --- !u!1001 &2696419696985574480
 PrefabInstance:
   m_ObjectHideFlags: 0

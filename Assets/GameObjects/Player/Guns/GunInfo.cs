@@ -6,6 +6,7 @@ public class GunInfo : ScriptableObject
     public float speed;
     public float size;
     public float ttl;
+    public float ttlRnd;
     
     public float damage;
 

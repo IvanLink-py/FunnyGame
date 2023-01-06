@@ -9,8 +9,11 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float speed = 5;
     private Rigidbody2D _rigidbody2D;
     private Camera _mainCamera;
-    private float _recall = 0.1f;
-    private float _recallTimer = 0f;
+    private float _recallTimer;
+    private int _ammoInMag;
+    private bool _canShoot;
+
+    public GunInfo currentGun;
 
     public Vector3 Forward
     {
@@ -25,13 +28,14 @@ public class PlayerControl : MonoBehaviour
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _mainCamera = Camera.main;
+        _ammoInMag = currentGun.ammoInMag;
     }
 
     void FixedUpdate()
     {
         Movement();
         Aim();
-        Shoot();
+        ShootControl();
         // Debug.DrawLine(transform.position, transform.position + Forward);
     }
 
@@ -50,15 +54,33 @@ public class PlayerControl : MonoBehaviour
         _rigidbody2D.AddForce(control * speed);
     }
 
-    private void Shoot()
+    private void ShootControl()
     {
+        if (Input.GetAxis("Fire1") < 0.5f && !currentGun.isFullAmmo) _canShoot = true;
+        
         _recallTimer -= Time.deltaTime;
         if (Input.GetAxis("Fire1") < 0.5f) return;
         if (_recallTimer > 0) return;
+        if (!_canShoot) return;
 
-        GameManager.Shoot(
-            transform.position + Forward,
-            Forward);
-        _recallTimer = _recall;
+        Shoot();
+    }
+
+    private void Shoot()
+    {
+        GameManager.Shoot(transform.position, Forward, currentGun);
+        _rigidbody2D.AddForce(-Forward*currentGun.recoil);
+        
+        _ammoInMag--;
+        if (_ammoInMag > 0) 
+            _recallTimer = 1 / currentGun.rate;
+        else {
+            _recallTimer = currentGun.reloadTime;
+            _ammoInMag = currentGun.ammoInMag;
+        }
+
+        if (!currentGun.isFullAmmo) _canShoot = false;
+
+
     }
 }

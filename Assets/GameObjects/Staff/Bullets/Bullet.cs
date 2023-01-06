@@ -3,16 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
-    [SerializeField] private float ttl = 2f;
+    private float ttl = 2f;
+    public GunInfo myInfo;
     void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _rigidbody2D.velocity = velocity;
+        ttl = myInfo.ttl - myInfo.ttl * Random.value * myInfo.ttlRnd;
     }
 
     public Vector2 velocity;
@@ -20,7 +23,9 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         ttl -= Time.deltaTime;
-        if (ttl <= 0 ) Destroy(gameObject);
+        if (ttl <= 0 || 
+            _rigidbody2D.velocity.magnitude < myInfo.speed / 2) 
+            Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D col)

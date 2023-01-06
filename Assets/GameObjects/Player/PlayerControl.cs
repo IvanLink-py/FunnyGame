@@ -32,7 +32,7 @@ public class PlayerControl : MonoBehaviour
         Movement();
         Aim();
         Shoot();
-        Debug.DrawLine(transform.position, transform.position + Forward);
+        // Debug.DrawLine(transform.position, transform.position + Forward);
     }
 
     private void Aim()

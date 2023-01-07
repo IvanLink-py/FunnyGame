@@ -279,6 +279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1244890021}
   speedMod: 100
+  fov: 0.1
 --- !u!1001 &870126432
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -853,7 +854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 0
-  delay: 0.1
+  delay: 0.4
   prefab: {fileID: 7770576777334339606, guid: 3b010e1755584f94a89975fa8f1b9507, type: 3}
 --- !u!4 &1981831205
 Transform:

@@ -29,6 +29,7 @@ public class EnemyConrol : RigidbodyEntity
                 target = GameManager.Player;
                 myState = AIState.Going;
                 break;
+            
             case AIState.Going:
                 if (target is not null)
                 {
@@ -42,10 +43,12 @@ public class EnemyConrol : RigidbodyEntity
                     }
                 }
                 break;
+            
             case AIState.PrepareToAttack:
                 attackTimer -= Time.deltaTime;
                 if (attackTimer < 0) {myState = AIState.Attack; MyRigidbody.AddForce(Forward * (speed * 5));}
                 break;
+            
             case AIState.Attack:
                 if (TargetInRadius())
                 {

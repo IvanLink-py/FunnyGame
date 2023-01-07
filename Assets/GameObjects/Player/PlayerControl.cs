@@ -5,7 +5,8 @@ namespace GameObjects.Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerControl : RigidbodyEntity
     {
-        [SerializeField] private float speed = 5;
+        [SerializeField] private float speed = 180;
+        [SerializeField] private Transform gunFire;
         private Camera _mainCamera;
         private float _recallTimer;
         private int _ammoInMag;
@@ -53,9 +54,16 @@ namespace GameObjects.Player
             Shoot();
         }
 
+        protected override void Die()
+        {
+            Debug.LogWarning("Ты умер, но Иван дал тебе новый шанс");
+            hp = maxHp;
+        }
+
         private void Shoot()
         {
-            GameManager.Shoot(transform.position, Forward, currentGun, this);
+            var position = gunFire.position;
+            GameManager.Shoot(position, _mainCamera.ScreenToWorldPoint(Input.mousePosition)-position, currentGun, this);
             MyRigidbody.AddForce(-Forward * currentGun.recoil);
 
             _ammoInMag--;

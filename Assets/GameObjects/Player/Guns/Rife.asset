@@ -20,7 +20,7 @@ MonoBehaviour:
   isFullAmmo: 1
   count: 1
   recoil: 10
-  rate: 8
-  ammoInMag: 30
+  rate: 120
+  ammoInMag: 3000
   reloadTime: 1.8
   scatter: 2

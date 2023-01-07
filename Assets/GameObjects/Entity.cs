@@ -53,6 +53,11 @@ public class Entity : MonoBehaviour
             hp - oldStat.hp, 
             armor - oldStat.armor));
 
-        if (hp <= 0) Destroy(gameObject);
+        if (hp <= 0) Die();
+    }
+
+    protected virtual void Die()
+    {
+        Destroy(gameObject);
     }
 }

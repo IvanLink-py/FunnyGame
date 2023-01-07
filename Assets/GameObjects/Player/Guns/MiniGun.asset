@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af5552b2ae1b3ea448103257c6065d96, type: 3}
-  m_Name: Rife
+  m_Name: MiniGun
   m_EditorClassIdentifier: 
-  speed: 50
-  size: 0.2
+  speed: 80
+  size: 0.1
   ttl: 1.5
   ttlRnd: 0
-  damage: 20
+  damage: 100
   isFullAmmo: 1
   count: 1
-  recoil: 10
-  rate: 12
-  ammoInMag: 30
-  reloadTime: 1.8
+  recoil: 0
+  rate: 10
+  ammoInMag: 1000
+  reloadTime: 0
   scatter: 0

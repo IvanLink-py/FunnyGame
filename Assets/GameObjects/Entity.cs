@@ -29,9 +29,24 @@ public class Entity : MonoBehaviour
 
     protected void LookAt(Vector3 pos)
     {
-        var diff = pos - transform.position;
-        diff.Normalize();
+        LookAt(pos, transform.position);
+    }
 
+    protected void LookAt(Vector3 pos, Vector3 offset)
+    {
+        var diff = pos - transform.position + (transform.position - offset);
+        
+        // ↓ Костыль ↓ 
+        
+        if (diff.magnitude < 1.5f) diff = pos - offset + (offset - transform.position); 
+        
+        // ↑ Костыль ↑ 
+        
+        // Метод LookAt вызывает осцилляцию игрового персонажа при прицеливании слишком близко.
+        // Суть костыля в замене способа поворота при малой дальности прицеливания.
+        // Для воспроизведения бага закомментируйте строчку выше
+        // Гарантированно вознаграждение за исправление
+        
         var targetRotation = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, targetRotation - 90);
     }

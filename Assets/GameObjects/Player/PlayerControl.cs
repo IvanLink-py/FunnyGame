@@ -27,12 +27,11 @@ namespace GameObjects.Player
             Movement();
             Aim();
             ShootControl();
-            // Debug.DrawLine(transform.position, transform.position + Forward);
         }
 
         private void Aim()
         {
-            LookAt(_mainCamera.ScreenToWorldPoint(Input.mousePosition));
+            LookAt(_mainCamera.ScreenToWorldPoint(Input.mousePosition), gunFire.position);
         }
         
         private void Movement()
@@ -63,7 +62,8 @@ namespace GameObjects.Player
         private void Shoot()
         {
             var position = gunFire.position;
-            GameManager.Shoot(position, _mainCamera.ScreenToWorldPoint(Input.mousePosition)-position, currentGun, this);
+            // GameManager.Shoot(position, _mainCamera.ScreenToWorldPoint(Input.mousePosition)-position, currentGun, this);
+            GameManager.Shoot(position, Forward, currentGun, this);
             MyRigidbody.AddForce(-Forward * currentGun.recoil);
 
             _ammoInMag--;

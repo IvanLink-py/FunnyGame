@@ -538,7 +538,7 @@ GameObject:
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 748ae8b33df036b46a86e0387f1602cf, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -664,7 +664,7 @@ MonoBehaviour:
   armor: 0
   armorAbsorption: 0
   speed: 180
-  currentGun: {fileID: 11400000, guid: 448cf288ff10ff94d88e57ac2a1a93ca, type: 2}
+  currentGun: {fileID: 11400000, guid: b5e3ee783f71ccc47a9caa2fd8c4bbeb, type: 2}
 --- !u!1 &1401564792
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,6 +698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageDrawPrefab: {fileID: 3505295278250636142, guid: 89c15c32b890539428f6ee903a771771, type: 3}
+  snapRadius: 1
 --- !u!114 &1401564794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,6 +846,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1981831203
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1981831205}
+  - component: {fileID: 1981831204}
+  m_Layer: 0
+  m_Name: TempSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1981831204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981831203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c3180bb415d9684fa0f68a14c0ee65c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 0
+  delay: 3
+  prefab: {fileID: 7770576777334339606, guid: 3b010e1755584f94a89975fa8f1b9507, type: 3}
+--- !u!4 &1981831205
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981831203}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.57, y: -0.45, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2696419696985574480
 PrefabInstance:

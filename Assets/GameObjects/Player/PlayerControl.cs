@@ -9,7 +9,7 @@ namespace GameObjects.Player
         private Camera _mainCamera;
         private float _recallTimer;
         private int _ammoInMag;
-        private bool _canShoot;
+        private bool _canShoot = true;
 
         public GunInfo currentGun;
         

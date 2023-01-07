@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EnemyConrol : RigidbodyEntity
 {
+    [SerializeField] private Animation myAnim;
     [SerializeField] private AIState myState;
     [SerializeField] [CanBeNull] private Entity target;
     [SerializeField] private float speed = 120;
@@ -37,12 +38,13 @@ public class EnemyConrol : RigidbodyEntity
                     {
                         attackTimer = attackDelay;
                         myState = AIState.PrepareToAttack;
+                        myAnim.Play("Attack");
                     }
                 }
                 break;
             case AIState.PrepareToAttack:
                 attackTimer -= Time.deltaTime;
-                if (attackTimer < 0) myState = AIState.Attack;
+                if (attackTimer < 0) {myState = AIState.Attack; MyRigidbody.AddForce(Forward * (speed * 5));}
                 break;
             case AIState.Attack:
                 if (TargetInRadius())

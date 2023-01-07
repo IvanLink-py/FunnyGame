@@ -664,7 +664,7 @@ MonoBehaviour:
   armor: 0
   armorAbsorption: 0
   speed: 180
-  currentGun: {fileID: 11400000, guid: b5e3ee783f71ccc47a9caa2fd8c4bbeb, type: 2}
+  currentGun: {fileID: 11400000, guid: 448cf288ff10ff94d88e57ac2a1a93ca, type: 2}
 --- !u!1 &1401564792
 GameObject:
   m_ObjectHideFlags: 0

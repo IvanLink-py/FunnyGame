@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -9,14 +10,14 @@ public class Entity : MonoBehaviour
 
     public void OnBulletHit(Bullet bullet)
     {
-        OnDamageTake(bullet.myInfo.damage);
+        OnDamageTake(bullet.myInfo.damage, bullet.shooter, DamageType.Shoot);
     }
-    
+
     public void OnMeleeHit(EnemyConrol enemy)
     {
-        OnDamageTake(enemy.damage);
+        OnDamageTake(enemy.damage, enemy, DamageType.Melee);
     }
-    
+
     protected Vector3 Forward
     {
         get
@@ -25,7 +26,7 @@ public class Entity : MonoBehaviour
             return Vector3.up * Mathf.Sin(z) + Vector3.right * Mathf.Cos(z);
         }
     }
-    
+
     protected void LookAt(Vector3 pos)
     {
         var diff = pos - transform.position;
@@ -35,14 +36,23 @@ public class Entity : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, targetRotation - 90);
     }
 
-    private void OnDamageTake(float damage)
+    private void OnDamageTake(float damage, [CanBeNull] Entity source, DamageType type)
     {
+        var oldStat = (hp, armor);
+
         damage -= armor * armorAbsorption;
 
         if (!(damage > 0)) return;
-        hp -= damage;
+        hp = Mathf.Min(hp - damage, maxHp);
         armor = Mathf.Max(0, armor - 1 / 20f);
-        
+
+        GameManager.OnHit(new Damage(
+            source, 
+            this, 
+            type, 
+            hp - oldStat.hp, 
+            armor - oldStat.armor));
+
         if (hp <= 0) Destroy(gameObject);
     }
 }

@@ -12,6 +12,7 @@ public class Bullet : MonoBehaviour
     private float ttl = 2f;
     public GunInfo myInfo;
     public Vector2 velocity;
+    public Entity shooter;
 
     void Start()
     {

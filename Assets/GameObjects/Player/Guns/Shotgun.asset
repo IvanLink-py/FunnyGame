@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5552b2ae1b3ea448103257c6065d96, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  speed: 20
-  size: 0.1
+  speed: 40
+  size: 0.08
   ttl: 1
   ttlRnd: 1
   damage: 5
   isFullAmmo: 0
-  count: 14
-  recoil: 50
-  rate: 1.3
+  count: 23
+  recoil: 100
+  rate: 1.7
   ammoInMag: 12
   reloadTime: 3
   scatter: 30

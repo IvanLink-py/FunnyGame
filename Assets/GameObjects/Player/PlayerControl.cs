@@ -55,7 +55,7 @@ namespace GameObjects.Player
 
         private void Shoot()
         {
-            GameManager.Shoot(transform.position, Forward, currentGun);
+            GameManager.Shoot(transform.position, Forward, currentGun, this);
             MyRigidbody.AddForce(-Forward * currentGun.recoil);
 
             _ammoInMag--;

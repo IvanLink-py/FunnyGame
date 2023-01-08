@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    [Header("HP & Armor")]
     public float hp;
     public float maxHp;
     public float armor;
     public float armorAbsorption;
+    
 
     public void OnBulletHit(Bullet bullet)
     {

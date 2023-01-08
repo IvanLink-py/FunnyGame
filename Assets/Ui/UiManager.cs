@@ -1,10 +1,12 @@
-#nullable enable
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UiManager : MonoBehaviour
 {
     private static UiManager _ui;
+    [Header("SubSystems")] 
+    public UiHeathManager heathManager;
+    
     
     [Header("FloatingDamageInfo")]
     public GameObject damageDrawPrefab;

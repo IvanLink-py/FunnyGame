@@ -5,7 +5,7 @@ namespace GameObjects.Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerControl : RigidbodyEntity
     {
-        public PlayerControl main;
+        public static PlayerControl Main;
         
         [Space(10)]
         [Header("Control")]
@@ -21,7 +21,7 @@ namespace GameObjects.Player
         [SerializeField] private Transform gunFire;
         public GunInfo currentGun;
 
-        private void Awake() => main = this;
+        private void Awake() => Main = this;
         
 
         private new void Start()

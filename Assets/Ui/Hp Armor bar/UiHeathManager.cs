@@ -20,6 +20,6 @@ public class UiHeathManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Show();
+        // Show();
     }
 }

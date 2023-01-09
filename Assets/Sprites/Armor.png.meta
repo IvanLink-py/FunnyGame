@@ -116,22 +116,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Armor_Empty
+      name: Armor_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 128
-        width: 64
-        height: 64
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 50d73db6219da654ca48d1d92e422ef3
-      internalID: -1821975363
+      spriteID: 328a69505ae63fb4f88ed8f9f0894c3b
+      internalID: -1093185026
       vertices: []
       indices: 
       edges: []
@@ -140,18 +140,18 @@ TextureImporter:
       name: Armor_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
-        width: 64
-        height: 64
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b6a97aeafd4fd042b12baf583718682
+      spriteID: a46ed10eaea63da4397afd8a72f2dda3
       internalID: 104837781
       vertices: []
       indices: 
@@ -161,18 +161,18 @@ TextureImporter:
       name: Armor_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
-        width: 64
-        height: 64
+        x: 64
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e5ec2f1f1ac82742b52f3b845644bcb
+      spriteID: 0126a3da018f38a4b9ba803b8f0a94f5
       internalID: 198094033
       vertices: []
       indices: 
@@ -183,17 +183,17 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
-        width: 64
-        height: 64
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 59d2af170e92eff4a9c40f89c73f90b1
+      spriteID: 524c703e6e78d584fb717913bcdc431a
       internalID: 365971719
       vertices: []
       indices: 
@@ -203,18 +203,18 @@ TextureImporter:
       name: Armor_4
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3cfec69d028112b4a9ea217618f52ca1
+      spriteID: a36b0b9cfdcd84542b000d6c553ae498
       internalID: 61157004
       vertices: []
       indices: 
@@ -224,18 +224,18 @@ TextureImporter:
       name: Armor_5
       rect:
         serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 64
+        x: 64
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f9a168261f923d4496386b3a9e8f656
+      spriteID: 430d95bc00b96204c809a5c952e83893
       internalID: 1852981596
       vertices: []
       indices: 
@@ -247,59 +247,17 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca6d472e491269b41b7f2eb0f8a13241
+      spriteID: 46645735cce64a94bae28a7df5eb726a
       internalID: 1929463914
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Armor_7
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 69774b5c99269d343aafb26baeb56647
-      internalID: 1626564850
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Armor_8
-      rect:
-        serializedVersion: 2
-        x: 127
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9e3837c81443224439715f2e526789f5
-      internalID: 1150912526
       vertices: []
       indices: 
       edges: []
@@ -316,14 +274,12 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Armor_6: 1929463914
-      Armor_8: 1150912526
       Armor_3: 365971719
       Armor_2: 198094033
       Armor_5: 1852981596
-      Armor_7: 1626564850
       Armor_1: 104837781
+      Armor_0: -1093185026
       Armor_4: 61157004
-      Armor_Empty: -1821975363
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

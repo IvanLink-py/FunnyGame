@@ -1,10 +1,14 @@
-#nullable enable
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UiManager : MonoBehaviour
 {
     private static UiManager _ui;
+    [Header("SubSystems")] 
+    public UiHeathManager heathManager;
+    
+    
+    [Header("FloatingDamageInfo")]
     public GameObject damageDrawPrefab;
     private static List<FloatingDamageInfo> _lastInfo = new();
     [SerializeField] private float snapRadius = 0.2f; // Радус поиска ближайшей надписи при появлении новой 

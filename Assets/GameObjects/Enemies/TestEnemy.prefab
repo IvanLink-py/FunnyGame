@@ -152,7 +152,7 @@ MonoBehaviour:
   attackTimer: 0
   attackDelay: 0.3
   attackRadius: 1
-  damage: 20
+  damage: 1
 --- !u!111 &-5273801529997852021
 Animation:
   m_ObjectHideFlags: 0

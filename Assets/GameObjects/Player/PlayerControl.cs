@@ -5,15 +5,25 @@ namespace GameObjects.Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerControl : RigidbodyEntity
     {
+        public static PlayerControl Main;
+        
+        [Space(10)]
+        [Header("Control")]
         [SerializeField] private float speed = 180;
-        [SerializeField] private Transform gunFire;
         private Camera _mainCamera;
         private float _recallTimer;
         private int _ammoInMag;
         private bool _canShoot = true;
+        [Space(10)]
 
-        public GunInfo currentGun;
         
+        [Header("Weapor")]
+        [SerializeField] private Transform gunFire;
+        public GunInfo currentGun;
+
+        private void Awake() => Main = this;
+        
+
         private new void Start()
         {
             base.Start();

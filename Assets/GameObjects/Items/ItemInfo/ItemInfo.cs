@@ -8,4 +8,9 @@ public class ItemInfo : ScriptableObject
     public Sprite image;
     public int stackSize;
     
+    public bool Equals(Object obj)
+    {
+        if (obj == null || GetType() != obj.GetType()) return false;
+        return id == ((ItemInfo)obj).id;
+    }
 }

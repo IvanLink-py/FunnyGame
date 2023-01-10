@@ -1522,6 +1522,7 @@ GameObject:
   - component: {fileID: 1244890019}
   - component: {fileID: 1244890018}
   - component: {fileID: 1244890022}
+  - component: {fileID: 1244890023}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1654,6 +1655,19 @@ MonoBehaviour:
   speed: 180
   gunFire: {fileID: 1017141892}
   currentGun: {fileID: 11400000, guid: b5e3ee783f71ccc47a9caa2fd8c4bbeb, type: 2}
+--- !u!114 &1244890023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244890017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3db74735ae06e214f9d8284c99e68152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotCount: 16
 --- !u!1 &1376368702
 GameObject:
   m_ObjectHideFlags: 0

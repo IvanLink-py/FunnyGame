@@ -7,14 +7,39 @@ public class CameraControl : MonoBehaviour
 {
     [SerializeField] private Transform player;
     [SerializeField] private float speedMod = 100;
+    [SerializeField] private float zoom = 10;
+    [SerializeField] private float zoomMin = 5;
+    [SerializeField] private float zoomMax = 20;
+    [SerializeField] private float zoomSens = 0.1f;
+    private Camera _camera;
+
+    private void Awake()
+    {
+        _camera = GetComponent<Camera>();
+    }
+
     public float fov;
 
     private void FixedUpdate()
     {
         var playerPos = player.position;
+        var mouseOffset = FovMouseOffset();
+        CameraMove(playerPos + mouseOffset);
+        UpdateZoom();
+    }
+
+    private void UpdateZoom()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0) Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
+        zoom = Mathf.Clamp(zoom + Input.GetAxis("Mouse ScrollWheel") * zoomSens, zoomMin, zoomMax);
+        _camera.orthographicSize = zoom;
+    }
+    
+    private Vector3 FovMouseOffset()
+    {
         var screenCoords = Camera.main.ScreenToViewportPoint(Input.mousePosition) - Vector3.one / 2f;
         var mouseOffset = new Vector3(Screen.width * screenCoords.x, Screen.height * screenCoords.y) * (fov / 100);
-        CameraMove(playerPos + mouseOffset);
+        return mouseOffset;
     }
 
     private void CameraMove(Vector3 playerPos)

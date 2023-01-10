@@ -1,7 +1,5 @@
-using System;
 using GameObjects.Player;
 using JetBrains.Annotations;
-using UnityEditor.Search;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

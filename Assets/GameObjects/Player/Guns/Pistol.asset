@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5552b2ae1b3ea448103257c6065d96, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 3356160940865921444, guid: 2bffac980f9039f458d152292a6e97c6, type: 3}
   speed: 40
   size: 0.2
   ttl: 1

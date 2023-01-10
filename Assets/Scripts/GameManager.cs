@@ -9,7 +9,11 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
 
+    public ItemDB itemDb;
+
     public static PlayerControl Player;
+
+    public static ItemDB MainItemDB => _instance.itemDb;
 
     private void Awake() => _instance = this;
 

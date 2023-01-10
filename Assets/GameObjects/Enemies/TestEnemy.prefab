@@ -143,16 +143,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 70
   maxHp: 70
-  armor: 1
+  armor: 50
+  armorMax: 100
   armorAbsorption: 4
   myAnim: {fileID: -5273801529997852021}
   myState: 0
   target: {fileID: 0}
   speed: 40
   attackTimer: 0
-  attackDelay: 0.3
+  attackDelay: 0.6
   attackRadius: 1
-  damage: 1
+  damage: 10
 --- !u!111 &-5273801529997852021
 Animation:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class Entity : MonoBehaviour
     public float hp;
     public float maxHp;
     public float armor;
+    public float armorMax;
     public float armorAbsorption;
     
 
@@ -57,11 +58,13 @@ public class Entity : MonoBehaviour
     {
         var oldStat = (hp, armor);
 
-        damage -= armor * armorAbsorption;
+        var absorption = armor/armorMax * armorAbsorption;
+        armor = Mathf.Max(0, armor - damage/armorAbsorption);
+        
+        damage -= absorption;
 
         if (!(damage > 0)) return;
         hp = Mathf.Min(hp - damage, maxHp);
-        armor = Mathf.Max(0, armor - 1 / 20f);
 
         GameManager.OnHit(new Damage(
             source, 

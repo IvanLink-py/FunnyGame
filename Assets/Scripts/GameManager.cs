@@ -11,15 +11,13 @@ public class GameManager : MonoBehaviour
 
     public static PlayerControl Player;
 
-    [SerializeField] private GameObject bulletPrefab;
-
     private void Awake() => _instance = this;
 
     public static void Shoot(Vector2 pos, Vector2 dir, GunInfo gunInfo, Entity shooter)
     {
         for (var i = 0; i < gunInfo.count; i++)
         {
-            var b = Instantiate(_instance.bulletPrefab).transform;
+            var b = Instantiate(gunInfo.bulletPrefab).transform;
             var bullet = b.GetComponent<Bullet>();
             bullet.myInfo = gunInfo;
             bullet.shooter = shooter;

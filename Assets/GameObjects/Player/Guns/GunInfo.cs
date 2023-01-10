@@ -3,6 +3,9 @@ using UnityEngine;
 [CreateAssetMenu]
 public class GunInfo : ScriptableObject
 {
+    public GameObject bulletPrefab;
+    
+    [Header("Bullet data")]
     public float speed;
     public float size;
     public float ttl;
@@ -10,6 +13,7 @@ public class GunInfo : ScriptableObject
     
     public float damage;
 
+    [Header("Weapon data")]
     public bool isFullAmmo;
     public int count;
     public float recoil;

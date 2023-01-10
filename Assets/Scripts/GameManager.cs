@@ -74,6 +74,7 @@ public enum DamageType
 {
     Melee, 
     Shoot,
-    Fire
+    Fire,
+    Heal
 }
 

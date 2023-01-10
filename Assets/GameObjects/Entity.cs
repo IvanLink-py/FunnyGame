@@ -54,16 +54,27 @@ public class Entity : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, targetRotation - 90);
     }
 
+    public void Heal(float health, [CanBeNull] Entity source)
+    {
+        OnDamageTake(-health, source, DamageType.Heal);
+    }
+
     private void OnDamageTake(float damage, [CanBeNull] Entity source, DamageType type)
     {
         var oldStat = (hp, armor);
 
-        var absorption = armor/armorMax * armorAbsorption;
-        armor = Mathf.Max(0, armor - damage/armorAbsorption);
-        
-        damage -= absorption;
+        if (damage > 0)
+        {
 
-        if (!(damage > 0)) return;
+            var absorption = armor / armorMax * armorAbsorption;
+            armor = Mathf.Max(0, armor - damage / armorAbsorption);
+
+            damage -= absorption;
+
+            if (!(damage > 0)) return;
+
+        }
+
         hp = Mathf.Min(hp - damage, maxHp);
 
         GameManager.OnHit(new Damage(
@@ -72,7 +83,7 @@ public class Entity : MonoBehaviour
             type, 
             hp - oldStat.hp, 
             armor - oldStat.armor));
-
+        
         if (hp <= 0) Die();
     }
 

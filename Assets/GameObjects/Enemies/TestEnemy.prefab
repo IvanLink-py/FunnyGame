@@ -146,6 +146,7 @@ MonoBehaviour:
   armor: 50
   armorMax: 100
   armorAbsorption: 4
+  myDropTable: {fileID: 11400000, guid: b6a396744b512eb4d9175b469e8f06c6, type: 2}
   myAnim: {fileID: -5273801529997852021}
   myState: 0
   target: {fileID: 0}

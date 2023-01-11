@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d078371b18218541865e6a774059d9f, type: 3}
+  m_Name: ZombieDropTable
+  m_EditorClassIdentifier: 
+  records:
+  - item: {fileID: 11400000, guid: d4ff9de0e8711df46900515a9e7f1966, type: 2}
+    rare: 0.1
+    minAmount: 1
+    maxAmount: 4
+  - item: {fileID: 11400000, guid: 16258a2b183ef414a81e5f8e051feb23, type: 2}
+    rare: 0.2
+    minAmount: 1
+    maxAmount: 2
+  - item: {fileID: 11400000, guid: 91265596d15d37243aba9ba06bde4ec1, type: 2}
+    rare: 0.4
+    minAmount: 1
+    maxAmount: 10
+  - item: {fileID: 11400000, guid: 2ec10eee94295c84ca73627ee281c673, type: 2}
+    rare: 0.1
+    minAmount: 1
+    maxAmount: 100
+  - item: {fileID: 11400000, guid: d17b35440e9f2d94d8686c8ae904e07a, type: 2}
+    rare: 0.04
+    minAmount: 1
+    maxAmount: 70
+  - item: {fileID: 11400000, guid: a21e1736401bf984198dc73e8b094ea7, type: 2}
+    rare: 0.07
+    minAmount: 1
+    maxAmount: 30

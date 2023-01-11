@@ -15,13 +15,13 @@ public class Inventory : MonoBehaviour
     {
         slots = new InventorySlot[defaultSlotCount + hotBarSlotCount];
 
-        for (var i = 0; i < hotBarSlotCount; i++)
-        {
-            slots[i] = new InventorySlot(this, SlotType.Hotbar);
-        }
-        for (var i = hotBarSlotCount; i < hotBarSlotCount + defaultSlotCount; i++)
+        for (var i = 0; i < defaultSlotCount; i++)
         {
             slots[i] = new InventorySlot(this, SlotType.Default);
+        }
+        for (var i = defaultSlotCount; i < defaultSlotCount + hotBarSlotCount; i++)
+        {
+            slots[i] = new InventorySlot(this, SlotType.Hotbar);
         }
 
         cursorSlot = new InventorySlot(this, SlotType.Cursor);

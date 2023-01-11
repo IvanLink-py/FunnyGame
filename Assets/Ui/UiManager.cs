@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
 {
@@ -7,6 +9,15 @@ public class UiManager : MonoBehaviour
     [Header("SubSystems")] 
     public UiHeathManager heathManager;
     
+    [Header("Aim")] 
+    [SerializeField] private Image aim;
+    [Space]
+    
+    [Header("Inventory")] 
+    [SerializeField] private RectTransform inventory;
+    [SerializeField] private SlotsPresentation invPresenter;
+    [SerializeField] private KeyCode inventoryOpenKey;
+    [Space]
     
     [Header("FloatingDamageInfo")]
     public GameObject damageDrawPrefab;
@@ -22,6 +33,7 @@ public class UiManager : MonoBehaviour
     private void Start()
     {
         GameManager.OnHitRegister += DrawDamage;
+        
     }
 
     private void DrawDamage(Damage damageinfo)
@@ -62,5 +74,33 @@ public class UiManager : MonoBehaviour
     {
         if (_lastInfo.Contains(info)) _lastInfo.Remove(info);
         Destroy(info.gameObject);
+    }
+
+    private void FixedUpdate()
+    {
+        UpdateAimPos();
+    }
+
+    private void Update()
+    {
+        InventoryUpdate();
+    }
+
+    private void InventoryUpdate()
+    {
+        if (Input.GetKeyDown(inventoryOpenKey)) SetInventoryState(!inventory.gameObject.activeInHierarchy);
+    }
+
+    private void SetInventoryState(bool state)
+    {
+        inventory.gameObject.SetActive(state);
+        invPresenter.UpdateSlots();
+        Cursor.visible = state;
+        aim.gameObject.SetActive(!state);
+    }
+    
+    private void UpdateAimPos()
+    {
+        aim.rectTransform.position = Input.mousePosition;
     }
 }

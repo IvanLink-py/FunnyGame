@@ -10,7 +10,7 @@ public class SlotPresentation : MonoBehaviour
     [SerializeField] private Image itemIcon;
     [SerializeField] private Text itemCount;
 
-    public void FixedUpdate()
+    public void UpdateItems()
     {
         ShowItems(mySlot.Items);
     }

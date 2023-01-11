@@ -34,7 +34,7 @@ public class InventorySlot
 
     public int CanPut(Items put)
     {
-        if (Items is null) return put.count;
+        if (Items is null) return Mathf.Min(put.count, put.item.stackSize);
         if (!put.IsTypeEquals(Items)) return 0;
         if (put.item.stackSize >= put.count + Items.count) return put.count;
         return put.item.stackSize - Items.count;
@@ -44,8 +44,8 @@ public class InventorySlot
     {
         if (Items is null)
         {
-            Items = new Items { item = put.item, count = put.count};
-            return put.count;
+            Items = new Items { item = put.item, count = Mathf.Min(put.count, put.item.stackSize)};
+            return Mathf.Min(put.count, put.item.stackSize);
         }
 
         var amount = CanPut(put);

@@ -35,6 +35,8 @@ namespace GameObjects.Player
             _mainCamera = Camera.main;
             _ammoInMag = currentGun.ammoInMag;
             GameManager.Player = this;
+
+            myInventory.TryPut(new Items { item = GameManager.MainItemDB.infoList[0], count = 800 });
         }
 
         void FixedUpdate()

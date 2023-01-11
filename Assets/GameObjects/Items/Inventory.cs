@@ -6,17 +6,25 @@ using UnityEngine.Serialization;
 
 public class Inventory : MonoBehaviour
 {
-    public int slotCount;
+    public int defaultSlotCount;
+    public int hotBarSlotCount;
+    public InventorySlot cursorSlot;
     public InventorySlot[] slots;
 
     private void Awake()
     {
-        slots = new InventorySlot[slotCount];
+        slots = new InventorySlot[defaultSlotCount + hotBarSlotCount];
 
-        for (var i = 0; i < slotCount; i++)
+        for (var i = 0; i < hotBarSlotCount; i++)
         {
             slots[i] = new InventorySlot(this, SlotType.Hotbar);
         }
+        for (var i = hotBarSlotCount; i < hotBarSlotCount + defaultSlotCount; i++)
+        {
+            slots[i] = new InventorySlot(this, SlotType.Default);
+        }
+
+        cursorSlot = new InventorySlot(this, SlotType.Cursor);
     }
 
     public int TryPut(Items items)

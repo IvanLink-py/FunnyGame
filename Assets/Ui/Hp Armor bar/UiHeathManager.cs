@@ -7,21 +7,12 @@ using UnityEngine.UI;
 
 public class UiHeathManager : MonoBehaviour
 {
-    [Header("Aim")] 
-    [SerializeField] private Image aim;
-    [Space]
-
     [Header("Bars")]
     [SerializeField] private UiBar hpBar; 
     [SerializeField] private UiBar armorBar; 
     [SerializeField] private UiBar staminaBar; 
     [SerializeField] private UiBar hungerBar; 
     [SerializeField] private UiBar thirstBar;
-
-    private void Start()
-    {
-        Cursor.visible = false;
-    }
 
     private void Show()
     {
@@ -35,13 +26,5 @@ public class UiHeathManager : MonoBehaviour
     private void FixedUpdate()
     {
         Show();
-        UpdateAimPos();
     }
-
-    private void UpdateAimPos()
-    {
-        aim.rectTransform.position = Input.mousePosition;
-    }
-    
-    
 }

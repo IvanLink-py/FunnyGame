@@ -23,4 +23,17 @@ public class SlotsPresentation : MonoBehaviour
             slots.Add(slotP);
         }
     }
+
+    public void UpdateSlots()
+    {
+        foreach (var slot in slots)
+        {
+            slot.UpdateItems();
+        }
+    }
+
+    private void Update()
+    {
+        UpdateSlots();
+    }
 }

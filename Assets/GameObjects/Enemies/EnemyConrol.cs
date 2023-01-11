@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyConrol : RigidbodyEntity
 {
@@ -29,7 +30,7 @@ public class EnemyConrol : RigidbodyEntity
                 target = GameManager.Player;
                 myState = AIState.Going;
                 break;
-            
+
             case AIState.Going:
                 if (target is not null)
                 {
@@ -42,21 +43,27 @@ public class EnemyConrol : RigidbodyEntity
                         myAnim.Play("Attack");
                     }
                 }
+
                 break;
-            
+
             case AIState.PrepareToAttack:
                 attackTimer -= Time.deltaTime;
-                if (attackTimer < 0) {myState = AIState.Attack; MyRigidbody.AddForce(Forward * (speed * 5));}
+                if (attackTimer < 0)
+                {
+                    myState = AIState.Attack;
+                    MyRigidbody.AddForce(Forward * (speed * 5));
+                }
+
                 break;
-            
+
             case AIState.Attack:
                 if (TargetInRadius())
                 {
                     target.OnMeleeHit(this);
                 }
-                
+
                 myState = AIState.Going;
-                
+
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -67,13 +74,17 @@ public class EnemyConrol : RigidbodyEntity
     {
         return target is not null && (transform.position - target.transform.position).magnitude < attackRadius;
     }
-    
+
     protected override void Die()
     {
-        GameManager.ItemDrop(new Items {item = GameManager.MainItemDB.infoList[0], count = 4}, transform.position);
+        // GameManager.ItemDrop(new Items { item = GameManager.MainItemDB[0], count = 4 }, transform.position);
+        
+        GameManager.ItemDrop(Random.value > 0.5f
+            ? new Items { item = GameManager.MainItemDB[0], count = Random.Range(1, 20) }
+            : new Items { item = GameManager.MainItemDB[1], count = Random.Range(1, 20) }, transform.position);
+        
         base.Die();
     }
-    
 }
 
 public enum AIState
@@ -81,6 +92,7 @@ public enum AIState
     Idle,
     Going,
     PrepareToAttack,
+
     Attack
     // TODO: Временная отключка при полученни урона
 }

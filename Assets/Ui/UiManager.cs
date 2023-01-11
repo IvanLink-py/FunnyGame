@@ -6,21 +6,20 @@ using UnityEngine.UI;
 public class UiManager : MonoBehaviour
 {
     private static UiManager _ui;
-    [Header("SubSystems")] 
-    public UiHeathManager heathManager;
-    
-    [Header("Aim")] 
-    [SerializeField] private Image aim;
-    [Space]
-    
-    [Header("Inventory")] 
-    [SerializeField] private RectTransform inventory;
+    [Header("SubSystems")] public UiHeathManager heathManager;
+
+    [Header("Aim")] [SerializeField] private Image aim;
+
+    [Space] [Header("Inventory")] [SerializeField]
+    private RectTransform inventory;
+
     [SerializeField] private SlotsPresentation invPresenter;
     [SerializeField] private KeyCode inventoryOpenKey;
+    public InventorySlot cursorSlot;
+    public RectTransform cursorSlotPresentation;
     [Space]
     
-    [Header("FloatingDamageInfo")]
-    public GameObject damageDrawPrefab;
+    [Header("FloatingDamageInfo")] public GameObject damageDrawPrefab;
     private static List<FloatingDamageInfo> _lastInfo = new();
     [SerializeField] private float snapRadius = 0.2f; // Радус поиска ближайшей надписи при появлении новой 
 
@@ -29,11 +28,12 @@ public class UiManager : MonoBehaviour
     {
         _ui = this;
     }
-
+    
     private void Start()
     {
         GameManager.OnHitRegister += DrawDamage;
-        
+        cursorSlot = GameManager.Player.myInventory.cursorSlot;
+        cursorSlotPresentation.GetComponent<SlotPresentation>().mySlot = cursorSlot;
     }
 
     private void DrawDamage(Damage damageinfo)
@@ -42,7 +42,6 @@ public class UiManager : MonoBehaviour
         if (closestData.Item1 is not null && closestData.Item2 < snapRadius)
             closestData.Item1.Amount += damageinfo.HpAmount;
         else DamageInfoAppear(damageinfo.Target.transform.position, damageinfo.HpAmount);
-        
     }
 
     private static void DamageInfoAppear(Vector3 pos, float amount)
@@ -79,6 +78,7 @@ public class UiManager : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateAimPos();
+        UpdateCursorSlotPos();
     }
 
     private void Update()
@@ -98,9 +98,38 @@ public class UiManager : MonoBehaviour
         Cursor.visible = state;
         aim.gameObject.SetActive(!state);
     }
-    
+
+    public static bool CanShoot() => !_ui.inventory.gameObject.activeInHierarchy;
+
     private void UpdateAimPos()
     {
         aim.rectTransform.position = Input.mousePosition;
+    }
+    private void UpdateCursorSlotPos()
+    {
+        if (!inventory.gameObject.activeInHierarchy) return;
+        cursorSlotPresentation.position = Input.mousePosition;
+    }
+
+    public static void OnSlotClick(InventorySlot slot)
+    {
+        if (_ui.cursorSlot.Items is null)
+        {
+            var take = slot.Take(TakeMode.Full);
+            if (take is null) return;
+            _ui.cursorSlot.TryPut(take);
+        }
+        else
+        {
+            if (slot.Items is null)
+            {
+                slot.TryPut(_ui.cursorSlot.Take(TakeMode.Full));
+            }
+            else
+            {
+                var a = slot.TryPut(_ui.cursorSlot.Items);
+                _ui.cursorSlot.Items.count -= a;
+            }
+        }
     }
 }

@@ -1,11 +1,14 @@
 using System;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SlotPresentation : MonoBehaviour
+public class SlotPresentation : MonoBehaviour, IPointerClickHandler
 {
     public InventorySlot mySlot;
+
+    [SerializeField] private bool selfUpdate;
     
     [SerializeField] private Image itemIcon;
     [SerializeField] private Text itemCount;
@@ -30,5 +33,14 @@ public class SlotPresentation : MonoBehaviour
             itemIcon.color = Color.white;
             itemCount.text = items.count != 1 ? items.count.ToString() : "";
         }
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        UiManager.OnSlotClick(mySlot);
+    }
+
+    private void Update()
+    {
+        if (selfUpdate) UpdateItems();
     }
 }

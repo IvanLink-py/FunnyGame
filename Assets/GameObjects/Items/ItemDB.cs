@@ -23,4 +23,6 @@ public class ItemDB : ScriptableObject
 
         return l[0];
     }
+
+    public ItemInfo this[int index] => infoList[index];
 }

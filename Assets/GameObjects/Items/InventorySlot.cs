@@ -59,7 +59,8 @@ public class InventorySlot
         switch (mode)
         {
             case TakeMode.Full:
-                var taken = Items;
+                if (Items?.item is null) return null;
+                var taken = new Items { item = Items.item, count = Items.count, };
                 Clear();
                 return taken;
 

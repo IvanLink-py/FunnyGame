@@ -36,7 +36,7 @@ namespace GameObjects.Player
             _ammoInMag = currentGun.ammoInMag;
             GameManager.Player = this;
 
-            myInventory.TryPut(new Items { item = GameManager.MainItemDB.infoList[0], count = 800 });
+            // myInventory.TryPut(new Items { item = GameManager.MainItemDB[0], count = 800 });
         }
 
         void FixedUpdate()
@@ -59,6 +59,8 @@ namespace GameObjects.Player
 
         private void ShootControl()
         {
+            if (!UiManager.CanShoot()) return;
+            
             _recallTimer -= Time.deltaTime;
             if (_recallTimer > 0) return;
             

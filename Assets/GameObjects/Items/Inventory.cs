@@ -51,4 +51,20 @@ public class Inventory : MonoBehaviour
             .Where(slot => slot.Items is not null && slot.Items.item == item)
             .Sum(slot => slot.Items.count);
     }
+
+    public int TryTake(ItemInfo itemType, int count)
+    {
+        var getted = 0;
+        
+        foreach (var slot in slots)
+        {
+            if (slot.Items is null || slot.Items.item != itemType) continue;
+            var take = Mathf.Min(slot.Items.count, count - getted);
+            getted += take;
+            slot.Items.count -= getted;
+            if (getted >= count) return getted;
+        }
+
+        return getted;
+    }
 }

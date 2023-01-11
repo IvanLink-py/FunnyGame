@@ -1831,6 +1831,7 @@ GameObject:
   - component: {fileID: 1244890018}
   - component: {fileID: 1244890022}
   - component: {fileID: 1244890023}
+  - component: {fileID: 1244890024}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1961,9 +1962,9 @@ MonoBehaviour:
   armorMax: 100
   armorAbsorption: 10
   myDropTable: {fileID: 0}
+  MyRigidbody: {fileID: 0}
   speed: 180
   gunFire: {fileID: 1017141892}
-  currentGun: {fileID: 11400000, guid: b5e3ee783f71ccc47a9caa2fd8c4bbeb, type: 2}
   myInventory: {fileID: 1244890023}
 --- !u!114 &1244890023
 MonoBehaviour:
@@ -1992,6 +1993,20 @@ MonoBehaviour:
       item: {fileID: 0}
       count: 0
   slots: []
+--- !u!114 &1244890024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244890017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177a49eba3516274d87786b398cf9ede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunFire: {fileID: 1017141892}
+  currentGun: {fileID: 11400000, guid: 7c163f62e83dd20489afaab0266dc745, type: 2}
 --- !u!1 &1376368702
 GameObject:
   m_ObjectHideFlags: 0
@@ -2221,6 +2236,10 @@ MonoBehaviour:
   staminaBar: {fileID: 0}
   hungerBar: {fileID: 0}
   thirstBar: {fileID: 0}
+  ammoInMagLabel: {fileID: 453033284}
+  ammoMaxInMagLabel: {fileID: 309740157}
+  ammoHaveLabel: {fileID: 440601190}
+  ammoTypeImage: {fileID: 973530831}
 --- !u!1 &1441893196
 GameObject:
   m_ObjectHideFlags: 0

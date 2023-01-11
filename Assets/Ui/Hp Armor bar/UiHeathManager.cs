@@ -14,6 +14,12 @@ public class UiHeathManager : MonoBehaviour
     [SerializeField] private UiBar hungerBar; 
     [SerializeField] private UiBar thirstBar;
 
+    [Header("Weapon info")] 
+    [SerializeField] private Text ammoInMagLabel;
+    [SerializeField] private Text ammoMaxInMagLabel;
+    [SerializeField] private Text ammoHaveLabel;
+    [SerializeField] private Image ammoTypeImage;
+
     private void Show()
     {
         hpBar.MaxValue = PlayerControl.Main.maxHp;
@@ -21,6 +27,20 @@ public class UiHeathManager : MonoBehaviour
 
         armorBar.CurrentValue = PlayerControl.Main.armor;
         armorBar.MaxValue = PlayerControl.Main.armorMax;
+
+        ammoInMagLabel.text = ShotingManager.Instance.AmmoInMag.ToString();
+        ammoMaxInMagLabel.text = ShotingManager.Instance.AmmoMaxInMag.ToString();
+        ammoHaveLabel.text = ShotingManager.Instance.AmmoHave;
+        if (ShotingManager.Instance.AmmoPic is not null)
+        {
+            ammoTypeImage.sprite = ShotingManager.Instance.AmmoPic;
+            ammoTypeImage.color = Color.white;
+        }
+        else
+        {
+            ammoTypeImage.sprite = ShotingManager.Instance.AmmoPic;
+            ammoTypeImage.color = new Color(0,0,0,0);
+        }
     }
 
     private void FixedUpdate()

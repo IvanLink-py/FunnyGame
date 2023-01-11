@@ -24,7 +24,7 @@ public class Entity : MonoBehaviour
         OnDamageTake(enemy.damage, enemy, DamageType.Melee);
     }
 
-    protected Vector3 Forward
+    public Vector3 Forward
     {
         get
         {

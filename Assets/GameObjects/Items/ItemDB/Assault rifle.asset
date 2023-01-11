@@ -17,4 +17,4 @@ MonoBehaviour:
   image: {fileID: -1070759515, guid: 9df7a7342c8b0a749a0f79eca9ca01cb, type: 3}
   stackSize: 1
   gunInfo: {fileID: 11400000, guid: b5e3ee783f71ccc47a9caa2fd8c4bbeb, type: 2}
-  ammoItemInfo: {fileID: 11400000, guid: d17b35440e9f2d94d8686c8ae904e07a, type: 2}
+  ammoItemInfo: {fileID: 11400000, guid: 87607fd84990fa54e8ee75f3e2deda4a, type: 2}

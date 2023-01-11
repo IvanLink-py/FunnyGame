@@ -3,7 +3,7 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public class RigidbodyEntity : Entity
 {
-    protected Rigidbody2D MyRigidbody;
+    public Rigidbody2D MyRigidbody;
     
     protected void Start() => MyRigidbody = GetComponent<Rigidbody2D>();
     

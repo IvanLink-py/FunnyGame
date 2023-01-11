@@ -6,20 +6,16 @@ namespace GameObjects.Player
     public class PlayerControl : RigidbodyEntity
     {
         public static PlayerControl Main;
-        
-        [Space(10)]
-        [Header("Control")]
-        [SerializeField] private float speed = 180;
-        private Camera _mainCamera;
-        private float _recallTimer;
-        private int _ammoInMag;
-        private bool _canShoot = true;
-        [Space(10)]
 
-        
-        [Header("Inventory")]
+        [Space(10)] [Header("Control")] 
+        [SerializeField] private float speed = 180;
         [SerializeField] private Transform gunFire;
-        public GunInfo currentGun;
+
+        private Camera _mainCamera;
+        
+        private int _ammoInMag;
+
+        [Space(10)] [Header("Inventory")]
         public Inventory myInventory;
 
         private void Awake()
@@ -33,70 +29,33 @@ namespace GameObjects.Player
         {
             base.Start();
             _mainCamera = Camera.main;
-            _ammoInMag = currentGun.ammoInMag;
             GameManager.Player = this;
 
-            // myInventory.TryPut(new Items { item = GameManager.MainItemDB[0], count = 800 });
+            myInventory.TryPut(new Items { item = GameManager.MainItemDB.GetItemInfo("wpn_assault_rifle"), count = 1 });
+            myInventory.TryPut(new Items { item = GameManager.MainItemDB.GetItemInfo("ammo_machine_gun"), count = 100 });
         }
 
         void FixedUpdate()
         {
             Movement();
             Aim();
-            ShootControl();
         }
 
         private void Aim()
         {
             LookAt(_mainCamera.ScreenToWorldPoint(Input.mousePosition), gunFire.position);
         }
-        
+
         private void Movement()
         {
             var control = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             MyRigidbody.AddForce(control * speed);
         }
-
-        private void ShootControl()
-        {
-            if (!UiManager.CanShoot()) return;
-            
-            _recallTimer -= Time.deltaTime;
-            if (_recallTimer > 0) return;
-            
-            if(UiManager.IsPointerOverUIElement()) return;
-            
-            if (Input.GetAxis("Fire1") < 0.5f && !currentGun.isFullAmmo) _canShoot = true;
-            if (Input.GetAxis("Fire1") < 0.5f) return;
-            
-            if (!_canShoot) return;
-
-            Shoot();
-        }
-
+        
         protected override void Die()
         {
             Debug.LogWarning("Ты умер, но Иван дал тебе новый шанс");
             hp = maxHp;
-        }
-
-        private void Shoot()
-        {
-            var position = gunFire.position;
-            // GameManager.Shoot(position, _mainCamera.ScreenToWorldPoint(Input.mousePosition)-position, currentGun, this);
-            GameManager.Shoot(position, Forward, currentGun, this);
-            MyRigidbody.AddForce(-Forward * currentGun.recoil);
-
-            _ammoInMag--;
-            if (_ammoInMag > 0)
-                _recallTimer = 1 / currentGun.rate;
-            else
-            {
-                _recallTimer = currentGun.reloadTime;
-                _ammoInMag = currentGun.ammoInMag;
-            }
-
-            if (!currentGun.isFullAmmo) _canShoot = false;
         }
     }
 }

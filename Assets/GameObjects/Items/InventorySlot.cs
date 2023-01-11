@@ -1,9 +1,6 @@
-// #nullable enable
-
 using System;
 using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [Serializable]
 public class InventorySlot
@@ -29,9 +26,7 @@ public class InventorySlot
         this.myType = myType;
         _myInventory = myInventory;
     }
-
-    public void Clear() => Items = null;
-
+    
     public int CanPut(Items put)
     {
         if (Items is null) return Mathf.Min(put.count, put.item.stackSize);
@@ -44,7 +39,7 @@ public class InventorySlot
     {
         if (Items is null)
         {
-            Items = new Items { item = put.item, count = Mathf.Min(put.count, put.item.stackSize)};
+            Items = new Items { item = put.item, count = Mathf.Min(put.count, put.item.stackSize) };
             return Mathf.Min(put.count, put.item.stackSize);
         }
 
@@ -53,31 +48,30 @@ public class InventorySlot
         return amount;
     }
 
-    [CanBeNull]
-    public Items Take(TakeMode mode = TakeMode.Full)
+
+    public int TransferTo(InventorySlot receiver, TakeMode mode)
     {
+        if (Items is null) return 0;
+        int transfer;
         switch (mode)
         {
             case TakeMode.Full:
-                if (Items?.item is null) return null;
-                var taken = new Items { item = Items.item, count = Items.count, };
-                Clear();
-                return taken;
-
+                transfer = receiver.TryPut(Items);
+                items = new Items { item = Items.item, count = Items.count - transfer };
+                break;
             case TakeMode.Half:
-                if (Items is null) return null;
-                var take = Items.count / 2;
-                Items.count -= take;
-                return new Items { count = take, item = Items.item };
-
+                transfer = receiver.TryPut(new Items { item = Items.item, count = (int)Mathf.Ceil(Items.count / 2f) });
+                items = new Items { item = Items.item, count = Items.count - transfer };
+                break;
             case TakeMode.One:
-                if (Items is null) return null;
-                Items.count -= 1;
-                return new Items { count = 1, item = Items.item };
-
+                transfer = receiver.TryPut(new Items { item = Items.item, count = 1 });
+                items = new Items { item = Items.item, count = Items.count - transfer };
+                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
         }
+
+        return transfer;
     }
 }
 

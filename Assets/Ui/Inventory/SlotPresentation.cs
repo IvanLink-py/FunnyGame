@@ -36,7 +36,7 @@ public class SlotPresentation : MonoBehaviour, IPointerClickHandler
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        UiManager.OnSlotClick(mySlot);
+        UiManager.OnSlotClick(mySlot, eventData.button);
     }
 
     private void Update()

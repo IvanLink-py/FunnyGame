@@ -80,8 +80,8 @@ public class EnemyConrol : RigidbodyEntity
         // GameManager.ItemDrop(new Items { item = GameManager.MainItemDB[0], count = 4 }, transform.position);
         
         GameManager.ItemDrop(Random.value > 0.5f
-            ? new Items { item = GameManager.MainItemDB[0], count = Random.Range(1, 20) }
-            : new Items { item = GameManager.MainItemDB[1], count = Random.Range(1, 20) }, transform.position);
+            ? new Items { item = GameManager.MainItemDB[0], count = Random.Range(1, 100) }
+            : new Items { item = GameManager.MainItemDB[1], count = Random.Range(1, 100) }, transform.position);
         
         base.Die();
     }

@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
+using Image = UnityEngine.UI.Image;
 
 public class UiManager : MonoBehaviour
 {
@@ -17,9 +20,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private KeyCode inventoryOpenKey;
     public InventorySlot cursorSlot;
     public RectTransform cursorSlotPresentation;
-    [Space]
-    
-    [Header("FloatingDamageInfo")] public GameObject damageDrawPrefab;
+    [Space] [Header("FloatingDamageInfo")] public GameObject damageDrawPrefab;
     private static List<FloatingDamageInfo> _lastInfo = new();
     [SerializeField] private float snapRadius = 0.2f; // Радус поиска ближайшей надписи при появлении новой 
 
@@ -28,7 +29,7 @@ public class UiManager : MonoBehaviour
     {
         _ui = this;
     }
-    
+
     private void Start()
     {
         GameManager.OnHitRegister += DrawDamage;
@@ -105,30 +106,33 @@ public class UiManager : MonoBehaviour
     {
         aim.rectTransform.position = Input.mousePosition;
     }
+
     private void UpdateCursorSlotPos()
     {
         if (!inventory.gameObject.activeInHierarchy) return;
         cursorSlotPresentation.position = Input.mousePosition;
     }
 
-    public static void OnSlotClick(InventorySlot slot)
+    public static void OnSlotClick(InventorySlot slot, PointerEventData.InputButton button)
     {
         if (_ui.cursorSlot.Items is null)
         {
-            var take = slot.Take(TakeMode.Full);
-            if (take is null) return;
-            _ui.cursorSlot.TryPut(take);
+            slot.TransferTo(_ui.cursorSlot, button == PointerEventData.InputButton.Left ? TakeMode.Full : TakeMode.Half);
         }
         else
         {
             if (slot.Items is null)
             {
-                slot.TryPut(_ui.cursorSlot.Take(TakeMode.Full));
+                _ui.cursorSlot.TransferTo(slot, button == PointerEventData.InputButton.Left ? TakeMode.Full : TakeMode.One);
             }
             else
             {
-                var a = slot.TryPut(_ui.cursorSlot.Items);
-                _ui.cursorSlot.Items.count -= a;
+                var a = _ui.cursorSlot.TransferTo(slot, button == PointerEventData.InputButton.Left ? TakeMode.Full : TakeMode.One);;
+
+                if (a != 0) return;
+                var temp = new Items { item = slot.Items.item, count = slot.Items.count };
+                slot.Items = _ui.cursorSlot.Items;
+                _ui.cursorSlot.Items = temp;
             }
         }
     }

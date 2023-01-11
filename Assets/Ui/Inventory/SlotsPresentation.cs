@@ -11,8 +11,7 @@ public class SlotsPresentation : MonoBehaviour
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private SlotType slotType;
     [SerializeField] private List<SlotPresentation> slots;
-
-    [SerializeField] private GameObject cursorSlotPrefab;
+    
     private RectTransform _cursorSlotTransform;
 
     private void Start()

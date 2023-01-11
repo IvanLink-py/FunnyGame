@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc360d1be6e00134b8960b78c2a5df6b, type: 3}
-  m_Name: Metal
+  m_Script: {fileID: 11500000, guid: ca07573ba7b1fad49ae5b9d57e65da5e, type: 3}
+  m_Name: First-aid kit
   m_EditorClassIdentifier: 
-  id: metal
-  showName: "\u041C\u0435\u0442\u0430\u043B"
-  image: {fileID: 150390993, guid: 9df7a7342c8b0a749a0f79eca9ca01cb, type: 3}
+  id: first_aid_kit
+  showName: "\u0410\u043F\u0442\u0435\u0447\u043A\u0430"
+  image: {fileID: -321159096, guid: 9df7a7342c8b0a749a0f79eca9ca01cb, type: 3}
   stackSize: 10
+  useAction: 0
+  useActionProp: 50

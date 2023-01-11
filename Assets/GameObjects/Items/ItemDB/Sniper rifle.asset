@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc360d1be6e00134b8960b78c2a5df6b, type: 3}
-  m_Name: Wood
+  m_Script: {fileID: 11500000, guid: 6e81c3581e8216c458a65e7fdaa32f86, type: 3}
+  m_Name: Sniper rifle
   m_EditorClassIdentifier: 
-  id: wood
-  showName: "\u0414\u0440\u0435\u0432\u0438\u0441\u0438\u043D\u0430"
-  image: {fileID: -334410922, guid: 9df7a7342c8b0a749a0f79eca9ca01cb, type: 3}
-  stackSize: 20
+  id: 
+  showName: 
+  image: {fileID: 0}
+  stackSize: 0
+  gunInfo: {fileID: 0}
+  ammoItemInfo: {fileID: 0}

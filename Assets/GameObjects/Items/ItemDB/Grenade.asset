@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc360d1be6e00134b8960b78c2a5df6b, type: 3}
-  m_Name: Metal
+  m_Script: {fileID: 11500000, guid: 6e81c3581e8216c458a65e7fdaa32f86, type: 3}
+  m_Name: Grenade
   m_EditorClassIdentifier: 
-  id: metal
-  showName: "\u041C\u0435\u0442\u0430\u043B"
-  image: {fileID: 150390993, guid: 9df7a7342c8b0a749a0f79eca9ca01cb, type: 3}
+  id: wpn_grenade
+  showName: "\u0413\u0440\u0430\u043D\u0430\u0442\u0430"
+  image: {fileID: -834045946, guid: 9df7a7342c8b0a749a0f79eca9ca01cb, type: 3}
   stackSize: 10
+  gunInfo: {fileID: 0}
+  ammoItemInfo: {fileID: 0}

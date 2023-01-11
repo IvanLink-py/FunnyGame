@@ -47,9 +47,6 @@ public class GameManager : MonoBehaviour
     public static void OnHit(Damage damageInfo)
     {
         OnHitRegister?.Invoke(damageInfo);
-        // PlayerControl.Main.myInventory.TryPut(Random.value > 0.5f
-        //     ? new Items { item = MainItemDB.infoList[0], count = Random.Range(1, 20) }
-        //     : new Items { item = MainItemDB.infoList[1], count = Random.Range(1, 20) });
     }
 
     public static void ItemDrop(Items items, Vector3 pos)

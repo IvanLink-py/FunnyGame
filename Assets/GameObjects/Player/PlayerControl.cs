@@ -17,12 +17,17 @@ namespace GameObjects.Player
         [Space(10)]
 
         
-        [Header("Weapor")]
+        [Header("Inventory")]
         [SerializeField] private Transform gunFire;
         public GunInfo currentGun;
+        public Inventory myInventory;
 
-        private void Awake() => Main = this;
-        
+        private void Awake()
+        {
+            Main = this;
+            myInventory = GetComponent<Inventory>();
+        }
+
 
         private new void Start()
         {

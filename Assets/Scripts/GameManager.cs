@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     public static void OnHit(Damage damageInfo)
     {
         OnHitRegister?.Invoke(damageInfo);
+        PlayerControl.Main.myInventory.TryPut(new Items { item = MainItemDB.infoList[0], count = 7 });
     }
 }
 

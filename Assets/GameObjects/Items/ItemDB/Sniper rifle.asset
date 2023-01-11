@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e81c3581e8216c458a65e7fdaa32f86, type: 3}
   m_Name: Sniper rifle
   m_EditorClassIdentifier: 
-  id: 
-  showName: 
-  image: {fileID: 0}
-  stackSize: 0
-  gunInfo: {fileID: 0}
-  ammoItemInfo: {fileID: 0}
+  id: wpn_rifle
+  showName: "\u0421\u043D\u0430\u0439\u043F\u0435\u0440\u0441\u043A\u0430\u044F \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430"
+  image: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  stackSize: 1
+  gunInfo: {fileID: 11400000, guid: b5e3ee783f71ccc47a9caa2fd8c4bbeb, type: 2}
+  ammoItemInfo: {fileID: 11400000, guid: d17b35440e9f2d94d8686c8ae904e07a, type: 2}

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e81c3581e8216c458a65e7fdaa32f86, type: 3}
   m_Name: Assault rifle
   m_EditorClassIdentifier: 
-  id: wpn_pistol
-  showName: "\u041F\u0438\u0441\u0442\u043E\u043B\u0435\u0442"
-  image: {fileID: -457259921, guid: 9df7a7342c8b0a749a0f79eca9ca01cb, type: 3}
+  id: wpn_assault_rifle
+  showName: "\u0428\u0442\u0443\u0440\u043C\u043E\u0432\u0430\u044F \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430"
+  image: {fileID: -1070759515, guid: 9df7a7342c8b0a749a0f79eca9ca01cb, type: 3}
   stackSize: 1
-  gunInfo: {fileID: 11400000, guid: 5a12c7a045f787142940d0d4f454613e, type: 2}
-  ammoItemInfo: {fileID: 11400000, guid: 2ec10eee94295c84ca73627ee281c673, type: 2}
+  gunInfo: {fileID: 11400000, guid: b5e3ee783f71ccc47a9caa2fd8c4bbeb, type: 2}
+  ammoItemInfo: {fileID: 11400000, guid: d17b35440e9f2d94d8686c8ae904e07a, type: 2}

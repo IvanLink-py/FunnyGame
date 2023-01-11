@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e81c3581e8216c458a65e7fdaa32f86, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  id: 
-  showName: 
-  image: {fileID: 0}
-  stackSize: 0
-  gunInfo: {fileID: 0}
-  ammoItemInfo: {fileID: 0}
+  id: wpn_shotgun
+  showName: "\u0414\u0440\u043E\u0431\u043E\u0432\u0438\u043A"
+  image: {fileID: -31993192, guid: 9df7a7342c8b0a749a0f79eca9ca01cb, type: 3}
+  stackSize: 1
+  gunInfo: {fileID: 11400000, guid: 448cf288ff10ff94d88e57ac2a1a93ca, type: 2}
+  ammoItemInfo: {fileID: 11400000, guid: a21e1736401bf984198dc73e8b094ea7, type: 2}

@@ -9,6 +9,9 @@ public class Entity : MonoBehaviour
     public float armor;
     public float armorMax;
     public float armorAbsorption;
+
+    [Header("Drop")] 
+    [CanBeNull] public DropTable myDropTable;
     
 
     public void OnBulletHit(Bullet bullet)
@@ -89,6 +92,10 @@ public class Entity : MonoBehaviour
 
     protected virtual void Die()
     {
+        if (myDropTable is not null)
+            foreach (var item in myDropTable.Realise())
+                GameManager.ItemDrop(item, transform.position);
+        
         Destroy(gameObject);
     }
 }

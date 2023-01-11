@@ -30,7 +30,7 @@ public class CameraControl : MonoBehaviour
 
     private void UpdateZoom()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0) Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
+        // if (Input.GetAxis("Mouse ScrollWheel") > 0) Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
         zoom = Mathf.Clamp(zoom + Input.GetAxis("Mouse ScrollWheel") * zoomSens, zoomMin, zoomMax);
         _camera.orthographicSize = zoom;
     }

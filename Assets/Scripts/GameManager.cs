@@ -1,5 +1,6 @@
 using GameObjects.Player;
 using JetBrains.Annotations;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,7 +9,7 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
 
     public ItemDB itemDb;
-
+    public GameObject droppedItemPrefab;
     public static PlayerControl Player;
 
     public static ItemDB MainItemDB => _instance.itemDb;
@@ -46,7 +47,16 @@ public class GameManager : MonoBehaviour
     public static void OnHit(Damage damageInfo)
     {
         OnHitRegister?.Invoke(damageInfo);
-        PlayerControl.Main.myInventory.TryPut(new Items { item = MainItemDB.infoList[0], count = 7 });
+        // PlayerControl.Main.myInventory.TryPut(Random.value > 0.5f
+        //     ? new Items { item = MainItemDB.infoList[0], count = Random.Range(1, 20) }
+        //     : new Items { item = MainItemDB.infoList[1], count = Random.Range(1, 20) });
+    }
+
+    public static void ItemDrop(Items items, Vector3 pos)
+    {
+        var obj = Instantiate(_instance.droppedItemPrefab, pos, Quaternion.identity);
+        obj.GetComponent<DropedItem>().items = items;
+        obj.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.value - 0.5f, Random.value - 0.5f);
     }
 }
 
@@ -55,9 +65,9 @@ public class Damage
 {
     public Entity Target;
     [CanBeNull] public Entity Shooter;
-    
+
     public DamageType Type;
-    
+
     public float HpAmount;
     public float ArmorAmount;
 
@@ -73,9 +83,8 @@ public class Damage
 
 public enum DamageType
 {
-    Melee, 
+    Melee,
     Shoot,
     Fire,
     Heal
 }
-

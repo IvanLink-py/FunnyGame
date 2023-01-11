@@ -67,6 +67,13 @@ public class EnemyConrol : RigidbodyEntity
     {
         return target is not null && (transform.position - target.transform.position).magnitude < attackRadius;
     }
+    
+    protected override void Die()
+    {
+        GameManager.ItemDrop(new Items {item = GameManager.MainItemDB.infoList[0], count = 4}, transform.position);
+        base.Die();
+    }
+    
 }
 
 public enum AIState

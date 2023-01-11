@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Terrain
   - Entity
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Bullets
+  - Items
   - 
   - 
   - 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -28,5 +29,12 @@ public class Inventory : MonoBehaviour
             if (items.count <= 0) return items.count;
         }
         return items.count;
+    }
+
+    public int Count(ItemInfo item)
+    {
+        return slots
+            .Where(slot => slot.Items is not null && slot.Items.item == item)
+            .Sum(slot => slot.Items.count);
     }
 }

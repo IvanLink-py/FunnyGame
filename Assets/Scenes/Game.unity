@@ -1498,6 +1498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDb: {fileID: 11400000, guid: 04b1c60a158953c459c42043ce8298b5, type: 2}
+  droppedItemPrefab: {fileID: 1385264848856064465, guid: 3bb3f594292ff294ebba8470efe03239, type: 3}
 --- !u!4 &1146959811
 Transform:
   m_ObjectHideFlags: 0
@@ -1658,7 +1659,7 @@ MonoBehaviour:
   armorAbsorption: 10
   speed: 180
   gunFire: {fileID: 1017141892}
-  currentGun: {fileID: 11400000, guid: b5e3ee783f71ccc47a9caa2fd8c4bbeb, type: 2}
+  currentGun: {fileID: 11400000, guid: 448cf288ff10ff94d88e57ac2a1a93ca, type: 2}
   myInventory: {fileID: 0}
 --- !u!114 &1244890023
 MonoBehaviour:

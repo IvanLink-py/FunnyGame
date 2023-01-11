@@ -150,11 +150,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mySlot:
     myType: 0
+    inventory: {fileID: 0}
     items:
       item: {fileID: 0}
       count: 0
+  selfUpdate: 0
   itemIcon: {fileID: 7153325777668670352}
   itemCount: {fileID: 1977633488608160988}
+  border: {fileID: 7269418925864293498}
 --- !u!1 &3853876854042302761
 GameObject:
   m_ObjectHideFlags: 0

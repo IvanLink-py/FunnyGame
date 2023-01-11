@@ -175,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1750,7 +1750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   maxHp: 100
-  armor: 0
+  armor: 100
   armorMax: 100
   armorAbsorption: 10
   speed: 180
@@ -1773,6 +1773,13 @@ MonoBehaviour:
   hotBarSlotCount: 8
   cursorSlot:
     myType: 0
+    inventory: {fileID: 0}
+    items:
+      item: {fileID: 0}
+      count: 0
+  selectedHotBarSlot:
+    myType: 0
+    inventory: {fileID: 0}
     items:
       item: {fileID: 0}
       count: 0
@@ -1891,11 +1898,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heathManager: {fileID: 1401564798}
   aim: {fileID: 295369994}
+  inUi: 0
   inventory: {fileID: 1928404495}
   invPresenter: {fileID: 1809703613}
   inventoryOpenKey: 9
   cursorSlot:
     myType: 0
+    inventory: {fileID: 0}
     items:
       item: {fileID: 0}
       count: 0
@@ -2459,7 +2468,6 @@ MonoBehaviour:
   slotPrefab: {fileID: 3517781110390814766, guid: 583e0e7933341cc42900e18b7a66bb7b, type: 3}
   slotType: 0
   slots: []
-  cursorSlotPrefab: {fileID: 0}
 --- !u!1 &1897341617
 GameObject:
   m_ObjectHideFlags: 0
@@ -2721,7 +2729,6 @@ MonoBehaviour:
   slotPrefab: {fileID: 2794611250550096189, guid: 21b43936e175a4842b679d52ccf1a493, type: 3}
   slotType: 1
   slots: []
-  cursorSlotPrefab: {fileID: 0}
 --- !u!114 &2046477426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3023,6 +3030,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mySlot:
     myType: 2
+    inventory: {fileID: 0}
     items:
       item: {fileID: 0}
       count: 0

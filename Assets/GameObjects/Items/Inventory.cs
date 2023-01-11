@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour
     public int defaultSlotCount;
     public int hotBarSlotCount;
     public InventorySlot cursorSlot;
+    public InventorySlot selectedHotBarSlot;
     public InventorySlot[] slots;
 
     private void Awake()
@@ -25,7 +26,12 @@ public class Inventory : MonoBehaviour
         }
 
         cursorSlot = new InventorySlot(this, SlotType.Cursor);
+        SetSelectedSlot(slots.First(s => s.myType == SlotType.Hotbar));
     }
+
+    public bool IsSelected(InventorySlot slot) => selectedHotBarSlot == slot;
+
+    public void SetSelectedSlot(InventorySlot slot) => selectedHotBarSlot = slot;
 
     public int TryPut(Items items)
     {

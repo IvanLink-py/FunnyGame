@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
@@ -13,8 +14,8 @@ public class UiManager : MonoBehaviour
 
     [Header("Aim")] [SerializeField] private Image aim;
 
-    [Space] [Header("Inventory")] [SerializeField]
-    private RectTransform inventory;
+    [Space] [Header("Inventory")] public bool inUi;
+    [SerializeField] private RectTransform inventory;
 
     [SerializeField] private SlotsPresentation invPresenter;
     [SerializeField] private KeyCode inventoryOpenKey;
@@ -35,6 +36,7 @@ public class UiManager : MonoBehaviour
         GameManager.OnHitRegister += DrawDamage;
         cursorSlot = GameManager.Player.myInventory.cursorSlot;
         cursorSlotPresentation.GetComponent<SlotPresentation>().mySlot = cursorSlot;
+        SetInventoryState(inUi);
     }
 
     private void DrawDamage(Damage damageinfo)
@@ -89,15 +91,16 @@ public class UiManager : MonoBehaviour
 
     private void InventoryUpdate()
     {
-        if (Input.GetKeyDown(inventoryOpenKey)) SetInventoryState(!inventory.gameObject.activeInHierarchy);
+        if (Input.GetKeyDown(inventoryOpenKey)) SetInventoryState(!inUi);
     }
 
     private void SetInventoryState(bool state)
     {
-        inventory.gameObject.SetActive(state);
+        inUi = state;
+        inventory.gameObject.SetActive(inUi);
         invPresenter.UpdateSlots();
-        Cursor.visible = state;
-        aim.gameObject.SetActive(!state);
+        Cursor.visible = inUi;
+        aim.gameObject.SetActive(!inUi);
     }
 
     public static bool CanShoot() => !_ui.inventory.gameObject.activeInHierarchy;
@@ -115,25 +118,59 @@ public class UiManager : MonoBehaviour
 
     public static void OnSlotClick(InventorySlot slot, PointerEventData.InputButton button)
     {
-        if (_ui.cursorSlot.Items is null)
+        if (_ui.inUi)
         {
-            slot.TransferTo(_ui.cursorSlot, button == PointerEventData.InputButton.Left ? TakeMode.Full : TakeMode.Half);
-        }
-        else
-        {
-            if (slot.Items is null)
+            if (_ui.cursorSlot.Items is null)
             {
-                _ui.cursorSlot.TransferTo(slot, button == PointerEventData.InputButton.Left ? TakeMode.Full : TakeMode.One);
+                slot.TransferTo(_ui.cursorSlot,
+                    button == PointerEventData.InputButton.Left ? TakeMode.Full : TakeMode.Half);
             }
             else
             {
-                var a = _ui.cursorSlot.TransferTo(slot, button == PointerEventData.InputButton.Left ? TakeMode.Full : TakeMode.One);;
+                if (slot.Items is null)
+                {
+                    _ui.cursorSlot.TransferTo(slot,
+                        button == PointerEventData.InputButton.Left ? TakeMode.Full : TakeMode.One);
+                }
+                else
+                {
+                    var a = _ui.cursorSlot.TransferTo(slot,
+                        button == PointerEventData.InputButton.Left ? TakeMode.Full : TakeMode.One);
+                    ;
 
-                if (a != 0) return;
-                var temp = new Items { item = slot.Items.item, count = slot.Items.count };
-                slot.Items = _ui.cursorSlot.Items;
-                _ui.cursorSlot.Items = temp;
+                    if (a != 0) return;
+                    var temp = new Items { item = slot.Items.item, count = slot.Items.count };
+                    slot.Items = _ui.cursorSlot.Items;
+                    _ui.cursorSlot.Items = temp;
+                }
             }
         }
+        else
+        {
+            if (slot.myType == SlotType.Hotbar) slot.inventory.SetSelectedSlot(slot);
+        }
     }
+
+    public static bool IsPointerOverUIElement()
+    {
+        return IsPointerOverUIElement(GetEventSystemRaycastResults());
+    }
+ 
+    private static bool IsPointerOverUIElement(IEnumerable<RaycastResult> eventSystemRaysastResults)
+    {
+        return eventSystemRaysastResults.Any(curRaycastResult => curRaycastResult.gameObject.layer == LayerMask.NameToLayer("UI"));
+    }
+    static IEnumerable<RaycastResult> GetEventSystemRaycastResults()
+    {
+        var eventData = new PointerEventData(EventSystem.current)
+        {
+            position = Input.mousePosition
+        };
+        var raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, raycastResults);
+        return raycastResults;
+    }
+    
+    
+    
 }

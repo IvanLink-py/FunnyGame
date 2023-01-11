@@ -64,6 +64,8 @@ namespace GameObjects.Player
             _recallTimer -= Time.deltaTime;
             if (_recallTimer > 0) return;
             
+            if(UiManager.IsPointerOverUIElement()) return;
+            
             if (Input.GetAxis("Fire1") < 0.5f && !currentGun.isFullAmmo) _canShoot = true;
             if (Input.GetAxis("Fire1") < 0.5f) return;
             

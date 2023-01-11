@@ -1,6 +1,7 @@
 using System;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class InventorySlot
@@ -17,14 +18,14 @@ public class InventorySlot
     }
 
     public SlotType myType;
-    private Inventory _myInventory;
+    public Inventory inventory;
 
     [SerializeField] [CanBeNull] private Items items;
 
     public InventorySlot(Inventory myInventory, SlotType myType = SlotType.Default)
     {
         this.myType = myType;
-        _myInventory = myInventory;
+        inventory = myInventory;
     }
     
     public int CanPut(Items put)

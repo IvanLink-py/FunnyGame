@@ -1,24 +1,27 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using GameObjects.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UiHeathManager : MonoBehaviour
 {
-    [Header("Bars")]
-    [SerializeField] private UiBar hpBar; 
-    [SerializeField] private UiBar armorBar; 
-    [SerializeField] private UiBar staminaBar; 
-    [SerializeField] private UiBar hungerBar; 
+    [Header("Bars")] [SerializeField] private UiBar hpBar;
+
+    [SerializeField] private UiBar armorBar;
+    [SerializeField] private UiBar staminaBar;
+    [SerializeField] private UiBar hungerBar;
     [SerializeField] private UiBar thirstBar;
 
-    [Header("Weapon info")] 
-    [SerializeField] private Text ammoInMagLabel;
+    [Header("Weapon info")] [SerializeField]
+    private Text ammoInMagLabel;
+
     [SerializeField] private Text ammoMaxInMagLabel;
     [SerializeField] private Text ammoHaveLabel;
     [SerializeField] private Image ammoTypeImage;
+
+    private void FixedUpdate()
+    {
+        Show();
+    }
 
     private void Show()
     {
@@ -39,12 +42,7 @@ public class UiHeathManager : MonoBehaviour
         else
         {
             ammoTypeImage.sprite = ShotingManager.Instance.AmmoPic;
-            ammoTypeImage.color = new Color(0,0,0,0);
+            ammoTypeImage.color = new Color(0, 0, 0, 0);
         }
-    }
-
-    private void FixedUpdate()
-    {
-        Show();
     }
 }

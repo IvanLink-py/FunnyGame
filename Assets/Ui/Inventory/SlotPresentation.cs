@@ -12,6 +12,16 @@ public class SlotPresentation : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Image itemIcon;
     [SerializeField] private Text itemCount;
 
+    private void Update()
+    {
+        if (selfUpdate) UpdateItems();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        UiManager.OnSlotClick(mySlot, eventData.button);
+    }
+
     public void UpdateItems()
     {
         ShowItems(mySlot.Items, mySlot.inventory.IsSelected(mySlot));
@@ -31,15 +41,5 @@ public class SlotPresentation : MonoBehaviour, IPointerClickHandler
             itemIcon.color = Color.white;
             itemCount.text = items.count != 1 ? items.count.ToString() : "";
         }
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        UiManager.OnSlotClick(mySlot, eventData.button);
-    }
-
-    private void Update()
-    {
-        if (selfUpdate) UpdateItems();
     }
 }

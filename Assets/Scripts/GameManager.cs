@@ -1,20 +1,23 @@
 using GameObjects.Player;
 using JetBrains.Annotations;
-using UnityEditor;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+    public delegate void HitRegister(Damage damageInfo);
+
     private static GameManager _instance;
+    public static PlayerControl Player;
 
     public ItemDB itemDb;
     public GameObject droppedItemPrefab;
-    public static PlayerControl Player;
 
     public static ItemDB MainItemDB => _instance.itemDb;
 
-    private void Awake() => _instance = this;
+    private void Awake()
+    {
+        _instance = this;
+    }
 
     public static void Shoot(Vector2 pos, Vector2 dir, GunInfo gunInfo, Entity shooter)
     {
@@ -39,8 +42,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public delegate void HitRegister(Damage damageInfo);
-
     public static event HitRegister OnHitRegister;
 
 
@@ -60,13 +61,13 @@ public class GameManager : MonoBehaviour
 
 public class Damage
 {
-    public Entity Target;
-    [CanBeNull] public Entity Shooter;
-
-    public DamageType Type;
+    public float ArmorAmount;
 
     public float HpAmount;
-    public float ArmorAmount;
+    [CanBeNull] public Entity Shooter;
+    public Entity Target;
+
+    public DamageType Type;
 
     public Damage([CanBeNull] Entity shooter, Entity target, DamageType type, float hpAmount, float armorAmount)
     {

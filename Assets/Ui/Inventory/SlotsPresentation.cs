@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,7 +9,7 @@ public class SlotsPresentation : MonoBehaviour
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private SlotType slotType;
     [SerializeField] private List<SlotPresentation> slots;
-    
+
     private RectTransform _cursorSlotTransform;
 
     private void Start()
@@ -25,16 +23,13 @@ public class SlotsPresentation : MonoBehaviour
         }
     }
 
-    public void UpdateSlots()
-    {
-        foreach (var slot in slots)
-        {
-            slot.UpdateItems();
-        }
-    }
-
     private void Update()
     {
         UpdateSlots();
+    }
+
+    public void UpdateSlots()
+    {
+        foreach (var slot in slots) slot.UpdateItems();
     }
 }

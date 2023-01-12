@@ -1,15 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
-using Cursor = UnityEngine.Cursor;
-using Image = UnityEngine.UI.Image;
+using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
 {
     private static UiManager _ui;
+    private static readonly List<FloatingDamageInfo> _lastInfo = new();
     [Header("SubSystems")] public UiHeathManager heathManager;
 
     [Header("Aim")] [SerializeField] private Image aim;
@@ -22,7 +20,6 @@ public class UiManager : MonoBehaviour
     public InventorySlot cursorSlot;
     public RectTransform cursorSlotPresentation;
     [Space] [Header("FloatingDamageInfo")] public GameObject damageDrawPrefab;
-    private static List<FloatingDamageInfo> _lastInfo = new();
     [SerializeField] private float snapRadius = 0.2f; // Радус поиска ближайшей надписи при появлении новой 
 
 
@@ -37,6 +34,17 @@ public class UiManager : MonoBehaviour
         cursorSlot = GameManager.Player.myInventory.cursorSlot;
         cursorSlotPresentation.GetComponent<SlotPresentation>().mySlot = cursorSlot;
         SetInventoryState(inUi);
+    }
+
+    private void Update()
+    {
+        InventoryUpdate();
+    }
+
+    private void FixedUpdate()
+    {
+        UpdateAimPos();
+        UpdateCursorSlotPos();
     }
 
     private void DrawDamage(Damage damageinfo)
@@ -78,17 +86,6 @@ public class UiManager : MonoBehaviour
         Destroy(info.gameObject);
     }
 
-    private void FixedUpdate()
-    {
-        UpdateAimPos();
-        UpdateCursorSlotPos();
-    }
-
-    private void Update()
-    {
-        InventoryUpdate();
-    }
-
     private void InventoryUpdate()
     {
         if (Input.GetKeyDown(inventoryOpenKey)) SetInventoryState(!inUi);
@@ -103,7 +100,10 @@ public class UiManager : MonoBehaviour
         aim.gameObject.SetActive(!inUi);
     }
 
-    public static bool CanShoot() => !_ui.inventory.gameObject.activeInHierarchy;
+    public static bool CanShoot()
+    {
+        return !_ui.inventory.gameObject.activeInHierarchy;
+    }
 
     private void UpdateAimPos()
     {
@@ -155,12 +155,14 @@ public class UiManager : MonoBehaviour
     {
         return IsPointerOverUIElement(GetEventSystemRaycastResults());
     }
- 
+
     private static bool IsPointerOverUIElement(IEnumerable<RaycastResult> eventSystemRaysastResults)
     {
-        return eventSystemRaysastResults.Any(curRaycastResult => curRaycastResult.gameObject.layer == LayerMask.NameToLayer("UI"));
+        return eventSystemRaysastResults.Any(curRaycastResult =>
+            curRaycastResult.gameObject.layer == LayerMask.NameToLayer("UI"));
     }
-    static IEnumerable<RaycastResult> GetEventSystemRaycastResults()
+
+    private static IEnumerable<RaycastResult> GetEventSystemRaycastResults()
     {
         var eventData = new PointerEventData(EventSystem.current)
         {
@@ -170,7 +172,4 @@ public class UiManager : MonoBehaviour
         EventSystem.current.RaycastAll(eventData, raycastResults);
         return raycastResults;
     }
-    
-    
-    
 }

@@ -1,12 +1,14 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class FloatingDamageInfo : MonoBehaviour
 {
+    [SerializeField] private Text myText;
+    [SerializeField] private int timer;
+    [SerializeField] private int ttl;
+    [SerializeField] private float amount;
+
     public float Amount
     {
         get => amount;
@@ -16,11 +18,6 @@ public class FloatingDamageInfo : MonoBehaviour
             myText.text = Mathf.Round(value).ToString(CultureInfo.CurrentCulture);
         }
     }
-
-    [SerializeField] private Text myText;
-    [SerializeField] private int timer;
-    [SerializeField] private int ttl;
-    [SerializeField] private float amount;
 
 
     private void FixedUpdate()

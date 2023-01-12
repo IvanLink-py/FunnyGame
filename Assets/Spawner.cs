@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -12,7 +10,7 @@ public class Spawner : MonoBehaviour
     private void FixedUpdate()
     {
         timer -= Time.deltaTime;
-            
+
         if (!(timer <= 0)) return;
         Instantiate(prefab, transform.position, Quaternion.identity);
         timer = delay;

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraControl : MonoBehaviour
@@ -11,14 +8,14 @@ public class CameraControl : MonoBehaviour
     [SerializeField] private float zoomMin = 5;
     [SerializeField] private float zoomMax = 20;
     [SerializeField] private float zoomSens = 0.1f;
+
+    public float fov;
     private Camera _camera;
 
     private void Awake()
     {
         _camera = GetComponent<Camera>();
     }
-
-    public float fov;
 
     private void FixedUpdate()
     {
@@ -34,7 +31,7 @@ public class CameraControl : MonoBehaviour
         zoom = Mathf.Clamp(zoom + Input.GetAxis("Mouse ScrollWheel") * zoomSens, zoomMin, zoomMax);
         _camera.orthographicSize = zoom;
     }
-    
+
     private Vector3 FovMouseOffset()
     {
         var screenCoords = Camera.main.ScreenToViewportPoint(Input.mousePosition) - Vector3.one / 2f;

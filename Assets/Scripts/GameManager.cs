@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     public ItemDB itemDb;
     public GameObject droppedItemPrefab;
+    public GameObject explosionPrefab;
 
     public static ItemDB MainItemDB => _instance.itemDb;
 
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
         {
             var b = Instantiate(gunInfo.bulletPrefab).transform;
             var bullet = b.GetComponent<Bullet>();
+            
             bullet.myInfo = gunInfo;
             bullet.shooter = shooter;
 
@@ -40,6 +42,11 @@ public class GameManager : MonoBehaviour
             // Size
             b.localScale = Vector3.one * gunInfo.size;
         }
+    }
+
+    public static void Boom(Vector3 pos, GameObject expPrefab)
+    {
+        var e = Instantiate(expPrefab, pos, Quaternion.identity).GetComponent<Explosion>();
     }
 
     public static event HitRegister OnHitRegister;
@@ -82,7 +89,9 @@ public class Damage
 public enum DamageType
 {
     Melee,
+    Explosion,
     Shoot,
     Fire,
+    Env,
     Heal
 }

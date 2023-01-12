@@ -16,5 +16,5 @@ MonoBehaviour:
   showName: "\u0413\u0440\u0430\u043D\u0430\u0442\u0430"
   image: {fileID: -834045946, guid: 9df7a7342c8b0a749a0f79eca9ca01cb, type: 3}
   stackSize: 10
-  gunInfo: {fileID: 0}
+  gunInfo: {fileID: 11400000, guid: e518cb0ed396e1249b837afc6cb2bf5a, type: 2}
   ammoItemInfo: {fileID: 11400000}

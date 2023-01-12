@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5552b2ae1b3ea448103257c6065d96, type: 3}
+  m_Name: Grenade
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 4006459529047287030, guid: ded52b3226376b14bac5141866157c90, type: 3}
+  speed: 40
+  size: 1
+  ttl: 10
+  ttlRnd: 0
+  damage: 0
+  isFullAmmo: 0
+  count: 1
+  recoil: 0
+  rate: 100
+  ammoInMag: 1
+  reloadTime: 1.5
+  scatter: 2

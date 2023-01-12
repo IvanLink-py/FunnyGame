@@ -8,24 +8,24 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
 {
-    private Rigidbody2D _rigidbody2D;
-    private float ttl = 2f;
+    [FormerlySerializedAs("_rigidbody2D")] public Rigidbody2D rig2D;
+    public float ttl = 2f;
     public GunInfo myInfo;
     public Vector2 velocity;
     public Entity shooter;
 
-    void Start()
+    protected virtual void Start()
     {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-        _rigidbody2D.velocity = velocity;
+        rig2D = GetComponent<Rigidbody2D>();
+        rig2D.velocity = velocity;
         ttl = myInfo.ttl - myInfo.ttl * Random.value * myInfo.ttlRnd;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         ttl -= Time.deltaTime;
         if (ttl <= 0 ||
-            _rigidbody2D.velocity.magnitude < myInfo.speed / 2)
+            rig2D.velocity.magnitude < myInfo.speed / 2)
             Destroy(gameObject);
     }
 

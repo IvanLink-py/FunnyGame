@@ -1,3 +1,4 @@
+using GameObjects.Player;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -22,6 +23,16 @@ public class Entity : MonoBehaviour
     public void OnMeleeHit(EnemyConrol enemy)
     {
         OnDamageTake(enemy.damage, enemy, DamageType.Melee);
+    }
+    
+    public void OnEnvHit(float damage)
+    {
+        OnDamageTake(damage, null, DamageType.Env);
+    }
+    
+    public void OnExplosionHit(Explosion explosion)
+    {
+        OnDamageTake(explosion.damage, PlayerControl.Main, DamageType.Explosion);
     }
 
     public Vector3 Forward

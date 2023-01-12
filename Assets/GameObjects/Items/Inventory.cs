@@ -33,6 +33,8 @@ public class Inventory : MonoBehaviour
 
     public void SetSelectedSlot(InventorySlot slot) => selectedHotBarSlot = slot;
 
+    public void SetSelectedSlot(int n) => SetSelectedSlot(slots.Where(s => s.myType == SlotType.Hotbar).Skip(n).First());
+
     public int TryPut(Items items)
     {
         foreach (var slot in slots)

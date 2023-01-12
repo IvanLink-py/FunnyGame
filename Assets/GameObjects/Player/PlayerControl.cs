@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GameObjects.Player
@@ -39,8 +41,24 @@ namespace GameObjects.Player
         {
             Movement();
             Aim();
+            
         }
 
+        private void Update()
+        {
+            HotBarControl();
+        }
+
+        private void HotBarControl()    
+        {
+            for (var i = 0; i < 8; i++)
+            {
+                if (Input.GetKeyDown((KeyCode)((int)KeyCode.Alpha1 + i)))
+                    myInventory.SetSelectedSlot(i);
+            }
+        }
+
+        
         private void Aim()
         {
             LookAt(_mainCamera.ScreenToWorldPoint(Input.mousePosition), gunFire.position);

@@ -102,7 +102,7 @@ public class UiManager : MonoBehaviour
 
     public static bool CanShoot()
     {
-        return !_ui.inventory.gameObject.activeInHierarchy;
+        return !(_ui.inUi || IsPointerOverUIElement());
     }
 
     private void UpdateAimPos()

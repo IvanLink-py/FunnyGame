@@ -14,7 +14,11 @@ public class ShotingManager : MonoBehaviour
     public WeaponInfo? currentGun;
     public static ShotingManager Instance;
     private float _recallTimer;
+
+    private bool _inMoving;
     private bool _inReload;
+    private bool _inWaitingForTriggerRelease;
+
     private bool _canShoot = true;
 
     private Inventory _myInv;
@@ -25,7 +29,7 @@ public class ShotingManager : MonoBehaviour
 
     public int AmmoInMag => currentGun is null ? 0 : _ammoInMag;
     public int AmmoMaxInMag => currentGun is null ? 0 : currentGun.gunInfo.ammoInMag;
-    public string AmmoHave => currentGun is null ? "" : _myInv.Count(currentGun.ammoItemInfo).ToString();
+    public int AmmoHave => currentGun is null ? 0 : _myInv.Count(currentGun.ammoItemInfo);
     public Sprite? AmmoPic => currentGun?.ammoItemInfo.image;
 
     private void Awake()
@@ -55,66 +59,94 @@ public class ShotingManager : MonoBehaviour
                 SwitchGun((WeaponInfo)_myInv.selectedHotBarSlot.Items.item);
             return;
         }
-        
-        if (_myInv.selectedHotBarSlot.Items is not null && currentGun is not null && _myInv.selectedHotBarSlot.Items.item != currentGun)
+
+        if (_myInv.selectedHotBarSlot.Items is not null && currentGun is not null &&
+            _myInv.selectedHotBarSlot.Items.item != currentGun)
         {
             if (_myInv.selectedHotBarSlot.Items.item.GetType() == typeof(WeaponInfo))
                 SwitchGun((WeaponInfo)_myInv.selectedHotBarSlot.Items.item);
+            else
+                SwitchGun(null);
+            
         }
     }
 
 
     private void ShootControl()
     {
-        if (!UiManager.CanShoot() || currentGun is null) return;
+        if (!UiManager.CanShoot() || currentGun is null || _inMoving) return;
 
-        _recallTimer -= Time.deltaTime;
-        if (_recallTimer > 0) return;
-
-        if (UiManager.IsPointerOverUIElement()) return;
-
-        if (Input.GetAxis("Fire1") < 0.5f && !CurrentGunInfo.isFullAmmo) _canShoot = true;
+        if (Input.GetAxis("Fire1") < 0.5f || CurrentGunInfo.isFullAmmo) _inWaitingForTriggerRelease = false;
         if (Input.GetAxis("Fire1") < 0.5f) return;
 
-        if (_ammoInMag <= 0) { Reload(); return;}
-        
-        if (!_canShoot) return;
+        if (_ammoInMag <= 0)
+        {
+            Reload();
+            return;
+        }
+
+        if (_inWaitingForTriggerRelease) return;
 
         Shoot();
     }
 
     private void Reload()
     {
-        if (_inReload) return;
-        StartCoroutine(ReloadBegin());
+        if (_inReload || AmmoHave == 0) return;
+        StartCoroutine(ReloadCoroutine());
+    }
+
+    private void Moving()
+    {
+        if (_inMoving) return;
+        StartCoroutine(MovingCoroutine());
     }
 
     private void Shoot()
     {
         var position = gunFire.position;
-        // GameManager.Shoot(position, _mainCamera.ScreenToWorldPoint(Input.mousePosition)-position, currentGun, this);
+
         GameManager.Shoot(position, _player.Forward, CurrentGunInfo, _player);
         _player.MyRigidbody.AddForce(-_player.Forward * CurrentGunInfo.recoil);
 
+        Moving();
         _ammoInMag--;
-        _recallTimer = 1 / CurrentGunInfo.rate;
 
-        if (!CurrentGunInfo.isFullAmmo) _canShoot = false;
+        if (!CurrentGunInfo.isFullAmmo) _inWaitingForTriggerRelease = true;
+        if (_ammoInMag == 0) Reload();
     }
 
     public void SwitchGun(WeaponInfo? newGun)
     {
+        if (currentGun is not null)
+            _myInv.PutOrDrop(new Items { item = currentGun.ammoItemInfo, count = _ammoInMag }, transform.position);
+
         currentGun = newGun;
         _ammoInMag = 0;
-        if (newGun is not null)
-            _recallTimer = CurrentGunInfo.reloadTime;
+        
+        StopAllCoroutines();
+        
+        _inMoving = false;
+        _inReload = false;
+        _inWaitingForTriggerRelease = false;
+
+        if (newGun is null) return;
+        _recallTimer = CurrentGunInfo.reloadTime;
+        Reload();
     }
 
-    private IEnumerator ReloadBegin()
+    private IEnumerator ReloadCoroutine()
     {
         _inReload = true;
         yield return new WaitForSeconds(CurrentGunInfo.reloadTime);
         _ammoInMag += _myInv.TryTake(currentGun.ammoItemInfo, CurrentGunInfo.ammoInMag);
         _inReload = false;
+    }
+
+    private IEnumerator MovingCoroutine()
+    {
+        _inMoving = true;
+        yield return new WaitForSeconds(1 / CurrentGunInfo.rate);
+        _inMoving = false;
     }
 }

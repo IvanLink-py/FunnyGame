@@ -45,6 +45,12 @@ public class Inventory : MonoBehaviour
         return items.count;
     }
 
+    public void PutOrDrop(Items items, Vector3 dropPos)
+    {
+        TryPut(items);
+        if (items.count != 0) return;
+        GameManager.ItemDrop(items, dropPos);
+    }
     public int Count(ItemInfo item)
     {
         return slots

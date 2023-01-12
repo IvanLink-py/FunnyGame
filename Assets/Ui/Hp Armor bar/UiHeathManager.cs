@@ -33,7 +33,8 @@ public class UiHeathManager : MonoBehaviour
 
         ammoInMagLabel.text = ShotingManager.Instance.AmmoInMag.ToString();
         ammoMaxInMagLabel.text = ShotingManager.Instance.AmmoMaxInMag.ToString();
-        ammoHaveLabel.text = ShotingManager.Instance.AmmoHave;
+        ammoHaveLabel.text = ShotingManager.Instance.AmmoHave <= 1 ? "" : ShotingManager.Instance.AmmoHave.ToString();
+        
         if (ShotingManager.Instance.AmmoPic is not null)
         {
             ammoTypeImage.sprite = ShotingManager.Instance.AmmoPic;

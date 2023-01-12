@@ -37,6 +37,7 @@ public class Inventory : MonoBehaviour
 
     public int TryPut(Items items)
     {
+        if (items.count == 0) return 0;
         foreach (var slot in slots)
         {
             var amount = slot.TryPut(items);

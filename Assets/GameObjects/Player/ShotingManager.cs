@@ -45,6 +45,16 @@ public class ShotingManager : MonoBehaviour
         CheckInventoryWeapon();
     }
 
+    private void Update()
+    {
+        CheckReload();
+    }
+
+    private void CheckReload()
+    {
+        if (Input.GetKeyDown(KeyCode.R)) Reload();
+    }
+    
     private void CheckInventoryWeapon()
     {
         if (_myInv.selectedHotBarSlot.Items is null && currentGun is not null)
@@ -138,7 +148,11 @@ public class ShotingManager : MonoBehaviour
     private IEnumerator ReloadCoroutine()
     {
         _inReload = true;
+        _myInv.PutOrDrop(new Items { item = currentGun.ammoItemInfo, count = _ammoInMag }, transform.position);
+        _ammoInMag = 0;
+        
         yield return new WaitForSeconds(CurrentGunInfo.reloadTime);
+        
         _ammoInMag += _myInv.TryTake(currentGun.ammoItemInfo, CurrentGunInfo.ammoInMag);
         _inReload = false;
     }

@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
 
     public static void ItemDrop(Items items, Vector3 pos)
     {
+        if (items.count <= 0) return; 
         var obj = Instantiate(_instance.droppedItemPrefab, pos, Quaternion.identity);
         obj.GetComponent<DropedItem>().items = items;
         obj.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.value - 0.5f, Random.value - 0.5f);

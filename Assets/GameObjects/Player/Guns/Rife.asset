@@ -17,11 +17,13 @@ MonoBehaviour:
   size: 0.2
   ttl: 1.5
   ttlRnd: 0
-  damage: 20
+  damage: 50
   isFullAmmo: 1
+  isSingleAmmoLoad: 0
+  isPostLoad: 0
   count: 1
   recoil: 10
-  rate: 12
+  rate: 7
   ammoInMag: 30
   reloadTime: 1.8
   scatter: 0

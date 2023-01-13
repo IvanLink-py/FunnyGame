@@ -26,11 +26,19 @@ public class UiHeathManager : MonoBehaviour
         PlayerControl.Main.HpChanged += UpdateHp;
         PlayerControl.Main.ArmorChanged += UpdateArmor;
 
+        ShotingManager.Instance.ReloadBegin += OnShootingManagerEvent;
+        ShotingManager.Instance.ReloadEnds += OnShootingManagerEvent;
+        ShotingManager.Instance.ReloadAbort += OnShootingManagerEvent;
+        ShotingManager.Instance.WeaponChange += OnShootingManagerEvent;
+        ShotingManager.Instance.ShootEvent += OnShootingManagerEvent;
+        
+        UpdateAmmoInfo();
+
         UpdateIndicator(ref hpBar, PlayerControl.Main.maxHp, PlayerControl.Main.hp);
         UpdateIndicator(ref armorBar, PlayerControl.Main.armorMax, PlayerControl.Main.armor);
     }
 
-    private void FixedUpdate()
+    private void OnShootingManagerEvent(ShootingManagerEventArgs args)
     {
         UpdateAmmoInfo();
     }

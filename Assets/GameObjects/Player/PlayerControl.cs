@@ -67,6 +67,7 @@ namespace GameObjects.Player
         private void Movement()
         {
             var control = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            control.Normalise();
             MyRigidbody.AddForce(control * speed);
         }
         

@@ -8,8 +8,8 @@ public class InventoryContentChangedEventArgs : EventArgs
 {
     public Inventory Inventory;
     public IEnumerable<InventorySlot> Slots;
-    public IEnumerable<Items> ItemsTaken;
-    public IEnumerable<Items> ItemsLost;
+    public Items ItemsTaken;
+    public Items ItemsLost;
 }
 
 public class InventoryItemsTakenEventArgs : InventoryContentChangedEventArgs
@@ -38,7 +38,7 @@ public class InventoryActiveSlotContentChangedEventArgs : EventArgs
 public class InventorySlotContentChangedEventArgs : EventArgs
 {
     public Inventory Inventory;
-    public InventorySlot Slots;
+    public InventorySlot Slot;
     public Items NewItems;
 }
 
@@ -46,8 +46,10 @@ public class InventorySlotContentChangedEventArgs : EventArgs
 
 #region UiManager Events args
 
-public class UiStateChanged : EventArgs
+public class UiStateChangedEventArgs : EventArgs
 {
+    public UiState PrevState;
+    public UiState NewState;
 }
 
 #endregion

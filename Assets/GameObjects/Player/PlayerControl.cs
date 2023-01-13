@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace GameObjects.Player
 {
@@ -12,6 +13,10 @@ namespace GameObjects.Player
         [Space(10)] [Header("Control")] 
         [SerializeField] private float speed = 180;
         [SerializeField] private Transform gunFire;
+
+        // public event UnityAction<PlayerHungerChangedEventArgs> HungerChanged;
+        // public event UnityAction<PlayerStaminaChangedEventArgs> StaminaChanged;
+        // public event UnityAction<PlayerThirstChangedEventArgs> ThirstChanged;
 
         private Camera _mainCamera;
         

@@ -1,19 +1,22 @@
 using GameObjects.Player;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Entity : MonoBehaviour
 {
-    [Header("HP & Armor")]
-    public float hp;
+    [Header("HP & Armor")] public float hp;
     public float maxHp;
     public float armor;
     public float armorMax;
     public float armorAbsorption;
 
-    [Header("Drop")] 
-    [CanBeNull] public DropTable myDropTable;
-    
+    [Header("Drop")] [CanBeNull] public DropTable myDropTable;
+
+    public event UnityAction<EntityHpChangedEventArgs> HpChanged;
+    public event UnityAction<EntityArmorChangedEventArgs> ArmorChanged;
+    public event UnityAction<EntityDeathEventArgs> Death;
+
 
     public void OnBulletHit(Bullet bullet)
     {
@@ -24,12 +27,12 @@ public class Entity : MonoBehaviour
     {
         OnDamageTake(enemy.damage, enemy, DamageType.Melee);
     }
-    
+
     public void OnEnvHit(float damage)
     {
         OnDamageTake(damage, null, DamageType.Env);
     }
-    
+
     public void OnExplosionHit(Explosion explosion)
     {
         OnDamageTake(explosion.damage, PlayerControl.Main, DamageType.Explosion);
@@ -52,18 +55,18 @@ public class Entity : MonoBehaviour
     protected void LookAt(Vector3 pos, Vector3 offset)
     {
         var diff = pos - transform.position + (transform.position - offset);
-        
+
         // ↓ Костыль ↓ 
-        
-        if (diff.magnitude < 1.5f) diff = pos - offset + (offset - transform.position); 
-        
+
+        if (diff.magnitude < 1.5f) diff = pos - offset + (offset - transform.position);
+
         // ↑ Костыль ↑ 
-        
+
         // Метод LookAt вызывает осцилляцию игрового персонажа при прицеливании слишком близко.
         // Суть костыля в замене способа поворота при малой дальности прицеливания.
         // Для воспроизведения бага закомментируйте строчку выше
         // Гарантированно вознаграждение за исправление
-        
+
         var targetRotation = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, targetRotation - 90);
     }
@@ -79,34 +82,48 @@ public class Entity : MonoBehaviour
 
         if (damage > 0)
         {
-
             var absorption = armor / armorMax * armorAbsorption;
+
+
+            var armorOld = armor;
             armor = Mathf.Max(0, armor - damage / armorAbsorption);
+            if (armorOld - armor != 0)
+                ArmorChanged?.Invoke(new EntityArmorChangedEventArgs
+                {
+                    Entity = this, NewValue = hp, OldValue = armorOld
+                });
 
             damage -= absorption;
 
             if (!(damage > 0)) return;
-
         }
 
+        var hpOld = hp;
         hp = Mathf.Min(hp - damage, maxHp);
 
+        HpChanged?.Invoke(new EntityHpChangedEventArgs
+        {
+            Entity = this, NewValue = hp, OldValue = hpOld
+        });
+
         GameManager.OnHit(new Damage(
-            source, 
-            this, 
-            type, 
-            hp - oldStat.hp, 
+            source,
+            this,
+            type,
+            hp - oldStat.hp,
             armor - oldStat.armor));
-        
+
         if (hp <= 0) Die();
     }
 
     protected virtual void Die()
     {
+        Death?.Invoke(new EntityDeathEventArgs());
+
         if (myDropTable is not null)
             foreach (var item in myDropTable.Realise())
                 GameManager.ItemDrop(item, transform.position);
-        
+
         Destroy(gameObject);
     }
 }

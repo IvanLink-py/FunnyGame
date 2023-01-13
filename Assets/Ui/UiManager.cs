@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -8,12 +10,16 @@ public class UiManager : MonoBehaviour
 {
     private static UiManager _ui;
     private static readonly List<FloatingDamageInfo> _lastInfo = new();
+    public static UiState CurrentState = UiState.Game;
     [Header("SubSystems")] public UiHeathManager heathManager;
+    public static event UnityAction<UiStateChangedEventArgs> UiStateChanged;
 
     [Header("Aim")] [SerializeField] private Image aim;
 
-    [Space] [Header("Inventory")] public bool inUi;
-    [SerializeField] private RectTransform inventory;
+    [Space] [Header("Inventory")] [SerializeField]
+    private RectTransform inventory;
+
+    public static bool InUi => CurrentState != UiState.Game && CurrentState != UiState.None;
 
     [SerializeField] private SlotsPresentation invPresenter;
     [SerializeField] private KeyCode inventoryOpenKey;
@@ -21,7 +27,6 @@ public class UiManager : MonoBehaviour
     public RectTransform cursorSlotPresentation;
     [Space] [Header("FloatingDamageInfo")] public GameObject damageDrawPrefab;
     [SerializeField] private float snapRadius = 0.2f; // Радус поиска ближайшей надписи при появлении новой 
-
 
     private void Awake()
     {
@@ -33,7 +38,7 @@ public class UiManager : MonoBehaviour
         GameManager.OnHitRegister += DrawDamage;
         cursorSlot = GameManager.Player.myInventory.cursorSlot;
         cursorSlotPresentation.GetComponent<SlotPresentation>().mySlot = cursorSlot;
-        SetInventoryState(inUi);
+        SetInventoryState();
     }
 
     private void Update()
@@ -88,21 +93,43 @@ public class UiManager : MonoBehaviour
 
     private void InventoryUpdate()
     {
-        if (Input.GetKeyDown(inventoryOpenKey)) SetInventoryState(!inUi);
+        if (Input.GetKeyDown(inventoryOpenKey)) ChangeInventoryState();
     }
 
-    private void SetInventoryState(bool state)
+    private void ChangeInventoryState()
     {
-        inUi = state;
-        inventory.gameObject.SetActive(inUi);
+        switch (CurrentState)
+        {
+            case UiState.Game:
+                CurrentState = UiState.Inventory;
+                UiStateChanged?.Invoke(new UiStateChangedEventArgs
+                {
+                    NewState = CurrentState, PrevState = UiState.Game
+                });
+                SetInventoryState();
+                return;
+            case UiState.Inventory:
+                CurrentState = UiState.Game;
+                UiStateChanged?.Invoke(new UiStateChangedEventArgs
+                {
+                    NewState = CurrentState, PrevState = UiState.Inventory
+                });
+                SetInventoryState();
+                return;
+        }
+    }
+
+    private void SetInventoryState()
+    {
+        inventory.gameObject.SetActive(InUi);
         invPresenter.UpdateSlots();
-        Cursor.visible = inUi;
-        aim.gameObject.SetActive(!inUi);
+        Cursor.visible = InUi;
+        aim.gameObject.SetActive(!InUi);
     }
 
     public static bool CanShoot()
     {
-        return !(_ui.inUi || IsPointerOverUIElement());
+        return !(InUi || IsPointerOverUIElement());
     }
 
     private void UpdateAimPos()
@@ -118,7 +145,7 @@ public class UiManager : MonoBehaviour
 
     public static void OnSlotClick(InventorySlot slot, PointerEventData.InputButton button)
     {
-        if (_ui.inUi)
+        if (InUi)
         {
             if (_ui.cursorSlot.Items is null)
             {
@@ -138,7 +165,8 @@ public class UiManager : MonoBehaviour
                         button == PointerEventData.InputButton.Left ? TakeMode.Full : TakeMode.One);
 
                     if (a != 0) return;
-                    var temp = new Items { item = slot.Items.item, count = slot.Items.count, metaInfo = slot.Items.metaInfo};
+                    var temp = new Items
+                        { item = slot.Items.item, count = slot.Items.count, metaInfo = slot.Items.metaInfo };
                     slot.Items = _ui.cursorSlot.Items;
                     _ui.cursorSlot.Items = temp;
                 }
@@ -155,9 +183,9 @@ public class UiManager : MonoBehaviour
         return IsPointerOverUIElement(GetEventSystemRaycastResults());
     }
 
-    private static bool IsPointerOverUIElement(IEnumerable<RaycastResult> eventSystemRaysastResults)
+    private static bool IsPointerOverUIElement(IEnumerable<RaycastResult> eventSystemRaycastResults)
     {
-        return eventSystemRaysastResults.Any(curRaycastResult =>
+        return eventSystemRaycastResults.Any(curRaycastResult =>
             curRaycastResult.gameObject.layer == LayerMask.NameToLayer("UI"));
     }
 
@@ -171,4 +199,14 @@ public class UiManager : MonoBehaviour
         EventSystem.current.RaycastAll(eventData, raycastResults);
         return raycastResults;
     }
+}
+
+public enum UiState
+{
+    None,
+    Game,
+    Inventory,
+    Dialog,
+    Pause,
+    Menu
 }

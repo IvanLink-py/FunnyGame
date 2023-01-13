@@ -1,6 +1,7 @@
 using System;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 [Serializable]
@@ -20,6 +21,8 @@ public class InventorySlot
     public SlotType myType;
     public Inventory inventory;
 
+    public event UnityAction<InventorySlotContentChangedEventArgs> ContentChanged; 
+
     [SerializeField] [CanBeNull] private Items items;
 
     public InventorySlot(Inventory myInventory, SlotType myType = SlotType.Default)
@@ -38,14 +41,18 @@ public class InventorySlot
 
     public int TryPut(Items put)
     {
+        if (put.count <= 0) return 0;
+        
         if (Items is null)
         {
             Items = new Items { item = put.item, count = Mathf.Min(put.count, put.item.stackSize), metaInfo = put.metaInfo};
+            ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs());
             return Mathf.Min(put.count, put.item.stackSize);
         }
 
         var amount = CanPut(put);
         Items.count += amount;
+        if (amount > 0) ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs());
         return amount;
     }
 
@@ -68,7 +75,11 @@ public class InventorySlot
             _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
         };
 
+        if (transfer == 0) return 0;
+
         items = new Items { item = Items.item, count = Items.count - transfer, metaInfo = Items.metaInfo };
+        ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs());
+        
         return transfer;
     }
 }

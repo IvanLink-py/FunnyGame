@@ -5,9 +5,10 @@ public class Items
 {
     public ItemInfo item;
     public int count;
+    public MetaItemInfo metaInfo = new ();
 
-    public bool IsTypeEquals(Items other)
+    public bool CanStack(Items other)
     {
-        return item.Equals(other.item);
+        return item.Equals(other.item) && metaInfo.CanStack(other.metaInfo);
     }
 }

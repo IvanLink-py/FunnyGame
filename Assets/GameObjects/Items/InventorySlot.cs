@@ -31,7 +31,7 @@ public class InventorySlot
     public int CanPut(Items put)
     {
         if (Items is null) return Mathf.Min(put.count, put.item.stackSize);
-        if (!put.IsTypeEquals(Items)) return 0;
+        if (!put.CanStack(Items)) return 0;
         if (put.item.stackSize >= put.count + Items.count) return put.count;
         return put.item.stackSize - Items.count;
     }
@@ -40,7 +40,7 @@ public class InventorySlot
     {
         if (Items is null)
         {
-            Items = new Items { item = put.item, count = Mathf.Min(put.count, put.item.stackSize) };
+            Items = new Items { item = put.item, count = Mathf.Min(put.count, put.item.stackSize), metaInfo = put.metaInfo};
             return Mathf.Min(put.count, put.item.stackSize);
         }
 
@@ -53,25 +53,22 @@ public class InventorySlot
     public int TransferTo(InventorySlot receiver, TakeMode mode)
     {
         if (Items is null) return 0;
-        int transfer;
-        switch (mode)
+        
+        var transfer = mode switch
         {
-            case TakeMode.Full:
-                transfer = receiver.TryPut(Items);
-                items = new Items { item = Items.item, count = Items.count - transfer };
-                break;
-            case TakeMode.Half:
-                transfer = receiver.TryPut(new Items { item = Items.item, count = (int)Mathf.Ceil(Items.count / 2f) });
-                items = new Items { item = Items.item, count = Items.count - transfer };
-                break;
-            case TakeMode.One:
-                transfer = receiver.TryPut(new Items { item = Items.item, count = 1 });
-                items = new Items { item = Items.item, count = Items.count - transfer };
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
-        }
+            TakeMode.Full => receiver.TryPut(Items),
+            TakeMode.Half => receiver.TryPut(new Items
+            {
+                item = Items.item, count = (int)Mathf.Ceil(Items.count / 2f), metaInfo = Items.metaInfo
+            }),
+            TakeMode.One => receiver.TryPut(new Items
+            {
+                item = Items.item, count = 1, metaInfo = Items.metaInfo
+            }),
+            _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+        };
 
+        items = new Items { item = Items.item, count = Items.count - transfer, metaInfo = Items.metaInfo };
         return transfer;
     }
 }

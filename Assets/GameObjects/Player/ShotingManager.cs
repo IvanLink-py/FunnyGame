@@ -148,7 +148,7 @@ public class ShotingManager : MonoBehaviour
     private IEnumerator ReloadCoroutine()
     {
         _inReload = true;
-        _myInv.PutOrDrop(new Items { item = currentGun.ammoItemInfo, count = _ammoInMag }, transform.position);
+        _myInv.PutOrDrop(new Items { item = currentGun.ammoItemInfo, count = _ammoInMag}, transform.position);
         _ammoInMag = 0;
         
         yield return new WaitForSeconds(CurrentGunInfo.reloadTime);

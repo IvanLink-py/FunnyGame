@@ -18,6 +18,8 @@ public class DropTable : ScriptableObject
 public class DropTableRecord
 {
     public ItemInfo item;
+    public MetaItemInfo metaInfo;
+    
     [Range(0, 1)] public float rare;
     public int minAmount;
     public int maxAmount;
@@ -25,6 +27,6 @@ public class DropTableRecord
     [CanBeNull]
     public Items Realise()
     {
-        return Random.value > rare ? null : new Items { item = item, count = Random.Range(minAmount, maxAmount) };
+        return Random.value > rare ? null : new Items { item = item, count = Random.Range(minAmount, maxAmount), metaInfo = metaInfo};
     }
 }

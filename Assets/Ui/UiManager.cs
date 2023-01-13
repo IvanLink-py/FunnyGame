@@ -136,10 +136,9 @@ public class UiManager : MonoBehaviour
                 {
                     var a = _ui.cursorSlot.TransferTo(slot,
                         button == PointerEventData.InputButton.Left ? TakeMode.Full : TakeMode.One);
-                    ;
 
                     if (a != 0) return;
-                    var temp = new Items { item = slot.Items.item, count = slot.Items.count };
+                    var temp = new Items { item = slot.Items.item, count = slot.Items.count, metaInfo = slot.Items.metaInfo};
                     slot.Items = _ui.cursorSlot.Items;
                     _ui.cursorSlot.Items = temp;
                 }

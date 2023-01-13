@@ -1,9 +1,6 @@
 #nullable enable
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using GameObjects.Player;
-using JetBrains.Annotations;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerControl))]
@@ -13,11 +10,13 @@ public class ShotingManager : MonoBehaviour
     [SerializeField] private Transform gunFire;
     public WeaponInfo? currentGun;
     public static ShotingManager Instance;
-    private float _recallTimer;
 
     private bool _inMoving;
     private bool _inReload;
     private bool _inWaitingForTriggerRelease;
+
+    private bool _reloadBreak;
+    private IEnumerator _reloadRoutine;
 
     private bool _canShoot = true;
 
@@ -39,14 +38,15 @@ public class ShotingManager : MonoBehaviour
         _player = GetComponent<PlayerControl>();
     }
 
-    private void FixedUpdate()
+    private void Start()
     {
-        ShootControl();
+        _myInv.ActiveSlotContentChanged += _ => CheckInventoryWeapon();
         CheckInventoryWeapon();
     }
 
     private void Update()
     {
+        ShootControl();
         CheckReload();
     }
 
@@ -89,6 +89,12 @@ public class ShotingManager : MonoBehaviour
         if (Input.GetAxis("Fire1") < 0.5f || CurrentGunInfo.isFullAmmo) _inWaitingForTriggerRelease = false;
         if (Input.GetAxis("Fire1") < 0.5f) return;
 
+        if (CurrentGunInfo.isSingleAmmoLoad) {StopCoroutine(_reloadRoutine);
+            _inReload = false;
+        }
+        
+        if (_inReload && !CurrentGunInfo.isSingleAmmoLoad) return;
+        
         if (_ammoInMag <= 0)
         {
             Reload();
@@ -102,8 +108,9 @@ public class ShotingManager : MonoBehaviour
 
     private void Reload()
     {
-        if (_inReload || AmmoHave == 0) return;
-        StartCoroutine(ReloadCoroutine());
+        if (_inReload || AmmoHave == 0 || (CurrentGunInfo.isSingleAmmoLoad && _ammoInMag == CurrentGunInfo.ammoInMag)) return;
+        _reloadRoutine = ReloadCoroutine();
+        StartCoroutine(_reloadRoutine);
     }
 
     private void Moving()
@@ -141,20 +148,30 @@ public class ShotingManager : MonoBehaviour
         _inWaitingForTriggerRelease = false;
 
         if (newGun is null) return;
-        _recallTimer = CurrentGunInfo.reloadTime;
         Reload();
     }
 
     private IEnumerator ReloadCoroutine()
     {
         _inReload = true;
-        _myInv.PutOrDrop(new Items { item = currentGun.ammoItemInfo, count = _ammoInMag}, transform.position);
-        _ammoInMag = 0;
+        if (!CurrentGunInfo.isSingleAmmoLoad)
+        {
+            _myInv.PutOrDrop(new Items { item = currentGun.ammoItemInfo, count = _ammoInMag }, transform.position);
+            _ammoInMag = 0;
+        }
         
         yield return new WaitForSeconds(CurrentGunInfo.reloadTime);
         
-        _ammoInMag += _myInv.TryTake(currentGun.ammoItemInfo, CurrentGunInfo.ammoInMag);
-        _inReload = false;
+        _ammoInMag += _myInv.TryTake(currentGun.ammoItemInfo, CurrentGunInfo.isSingleAmmoLoad ? 1 : CurrentGunInfo.ammoInMag);
+
+        if (_ammoInMag < CurrentGunInfo.ammoInMag && CurrentGunInfo.isSingleAmmoLoad) {
+            _reloadRoutine = ReloadCoroutine();
+            StartCoroutine(_reloadRoutine);
+        }
+        else
+        {
+            _inReload = false;    
+        }
     }
 
     private IEnumerator MovingCoroutine()

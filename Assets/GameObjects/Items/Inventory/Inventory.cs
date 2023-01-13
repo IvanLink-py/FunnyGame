@@ -58,6 +58,7 @@ public class Inventory : MonoBehaviour
 
         args.CurrentSlot = selectedHotBarSlot;
         ActiveSlotChanged?.Invoke(args);
+        ActiveSlotContentChanged?.Invoke(new InventoryActiveSlotContentChangedEventArgs { NewItems = slot.Items });
     }
 
     public void SetSelectedSlot(int n) =>

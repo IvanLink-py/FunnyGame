@@ -1,3 +1,4 @@
+using System;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,15 +7,19 @@ using UnityEngine.UI;
 public class SlotPresentation : MonoBehaviour, IPointerClickHandler
 {
     public InventorySlot mySlot;
-
-    [SerializeField] private bool selfUpdate;
-
+    
     [SerializeField] private Image itemIcon;
     [SerializeField] private Text itemCount;
-
-    private void Update()
+    
+    private void Start()
     {
-        if (selfUpdate) UpdateItems();
+        mySlot.ContentChanged += MySlotOnContentChanged;
+        UpdateItems();
+    }
+
+    private void MySlotOnContentChanged(InventorySlotContentChangedEventArgs arg0)
+    {
+        UpdateItems(arg0.NewItems);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -25,6 +30,11 @@ public class SlotPresentation : MonoBehaviour, IPointerClickHandler
     public void UpdateItems()
     {
         ShowItems(mySlot.Items, mySlot.inventory.IsSelected(mySlot));
+    }
+    
+    private void UpdateItems(Items items)
+    {
+        ShowItems(items, mySlot.inventory.IsSelected(mySlot));
     }
 
     protected virtual void ShowItems([CanBeNull] Items items, bool isSelected)

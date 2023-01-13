@@ -139,7 +139,7 @@ public class UiManager : MonoBehaviour
 
     private void UpdateCursorSlotPos()
     {
-        if (!inventory.gameObject.activeInHierarchy) return;
+        if (CurrentState != UiState.Inventory && CurrentState != UiState.Dialog) return;
         cursorSlotPresentation.position = Input.mousePosition;
     }
 

@@ -21,7 +21,7 @@ public class InventorySlot
     public SlotType myType;
     public Inventory inventory;
 
-    public event UnityAction<InventorySlotContentChangedEventArgs> ContentChanged; 
+    public event UnityAction<InventorySlotContentChangedEventArgs> ContentChanged;
 
     [SerializeField] [CanBeNull] private Items items;
 
@@ -30,7 +30,7 @@ public class InventorySlot
         this.myType = myType;
         inventory = myInventory;
     }
-    
+
     public int CanPut(Items put)
     {
         if (Items is null) return Mathf.Min(put.count, put.item.stackSize);
@@ -42,17 +42,30 @@ public class InventorySlot
     public int TryPut(Items put)
     {
         if (put.count <= 0) return 0;
-        
+
         if (Items is null)
         {
-            Items = new Items { item = put.item, count = Mathf.Min(put.count, put.item.stackSize), metaInfo = put.metaInfo};
-            ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs());
+            Items = new Items
+                { item = put.item, count = Mathf.Min(put.count, put.item.stackSize), metaInfo = put.metaInfo };
+            ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs
+            {
+                Inventory = inventory,
+                NewItems = Items,
+                Slot = this
+            });
             return Mathf.Min(put.count, put.item.stackSize);
         }
 
         var amount = CanPut(put);
         Items.count += amount;
-        if (amount > 0) ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs());
+        if (amount > 0)
+            ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs
+            {
+                Inventory = inventory,
+                NewItems = Items,
+                Slot = this
+            });
+        ;
         return amount;
     }
 
@@ -60,7 +73,7 @@ public class InventorySlot
     public int TransferTo(InventorySlot receiver, TakeMode mode)
     {
         if (Items is null) return 0;
-        
+
         var transfer = mode switch
         {
             TakeMode.Full => receiver.TryPut(Items),
@@ -78,8 +91,14 @@ public class InventorySlot
         if (transfer == 0) return 0;
 
         items = new Items { item = Items.item, count = Items.count - transfer, metaInfo = Items.metaInfo };
-        ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs());
         
+        ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs
+        {
+            Inventory = inventory,
+            NewItems = Items,
+            Slot = this
+        });;
+
         return transfer;
     }
 }

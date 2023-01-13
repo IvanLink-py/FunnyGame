@@ -1,3 +1,4 @@
+using System;
 using GameObjects.Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,26 @@ public class UiHeathManager : MonoBehaviour
     [SerializeField] private Text ammoHaveLabel;
     [SerializeField] private Image ammoTypeImage;
 
+    private void Start()
+    {
+        PlayerControl.Main.HpChanged += arg0 =>
+        {
+            hpBar.MaxValue = PlayerControl.Main.maxHp;
+            hpBar.CurrentValue = arg0.NewValue;
+        };
+        
+        PlayerControl.Main.ArmorChanged += arg0 =>
+        {
+            armorBar.MaxValue = PlayerControl.Main.armorMax;
+            armorBar.CurrentValue = arg0.NewValue;
+        };
+        
+        hpBar.MaxValue = PlayerControl.Main.maxHp;
+        hpBar.CurrentValue = PlayerControl.Main.hp;
+        armorBar.MaxValue = PlayerControl.Main.armorMax;
+        armorBar.CurrentValue = PlayerControl.Main.armor;
+    }
+
     private void FixedUpdate()
     {
         Show();
@@ -25,16 +46,10 @@ public class UiHeathManager : MonoBehaviour
 
     private void Show()
     {
-        hpBar.MaxValue = PlayerControl.Main.maxHp;
-        hpBar.CurrentValue = PlayerControl.Main.hp;
-
-        armorBar.CurrentValue = PlayerControl.Main.armor;
-        armorBar.MaxValue = PlayerControl.Main.armorMax;
-
         ammoInMagLabel.text = ShotingManager.Instance.AmmoInMag.ToString();
         ammoMaxInMagLabel.text = ShotingManager.Instance.AmmoMaxInMag.ToString();
         ammoHaveLabel.text = ShotingManager.Instance.AmmoHave <= 1 ? "" : ShotingManager.Instance.AmmoHave.ToString();
-        
+
         if (ShotingManager.Instance.AmmoPic is not null)
         {
             ammoTypeImage.sprite = ShotingManager.Instance.AmmoPic;

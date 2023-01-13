@@ -7,20 +7,20 @@ using UnityEngine.UI;
 public class SlotPresentation : MonoBehaviour, IPointerClickHandler
 {
     public InventorySlot mySlot;
-    
+
     [SerializeField] private Image itemIcon;
     [SerializeField] private Text itemCount;
-    
+
     private void Start()
     {
         mySlot.ContentChanged += MySlotOnContentChanged;
+        mySlot.inventory.ActiveSlotChanged += MySlotOnContentChanged;
         UpdateItems();
     }
 
-    private void MySlotOnContentChanged(InventorySlotContentChangedEventArgs arg0)
-    {
-        UpdateItems(arg0.NewItems);
-    }
+    private void MySlotOnContentChanged(InventorySlotContentChangedEventArgs arg0) => UpdateItems(arg0.NewItems);
+    private void MySlotOnContentChanged(InventoryActiveSlotChangedEventArgs arg0) => UpdateItems();
+
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -31,7 +31,7 @@ public class SlotPresentation : MonoBehaviour, IPointerClickHandler
     {
         ShowItems(mySlot.Items, mySlot.inventory.IsSelected(mySlot));
     }
-    
+
     private void UpdateItems(Items items)
     {
         ShowItems(items, mySlot.inventory.IsSelected(mySlot));

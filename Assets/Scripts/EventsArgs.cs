@@ -61,6 +61,7 @@ public abstract class EntityIndicatorsChangedEventArgs : EventArgs
     public Entity Entity;
     public float OldValue;
     public float NewValue;
+    public float MaxValue;
 }
 
 public class EntityHpChangedEventArgs : EntityIndicatorsChangedEventArgs

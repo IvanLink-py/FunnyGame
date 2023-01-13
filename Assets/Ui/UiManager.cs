@@ -165,10 +165,7 @@ public class UiManager : MonoBehaviour
                         button == PointerEventData.InputButton.Left ? TakeMode.Full : TakeMode.One);
 
                     if (a != 0) return;
-                    var temp = new Items
-                        { item = slot.Items.item, count = slot.Items.count, metaInfo = slot.Items.metaInfo };
-                    slot.Items = _ui.cursorSlot.Items;
-                    _ui.cursorSlot.Items = temp;
+                    _ui.cursorSlot.Swap(slot);
                 }
             }
         }

@@ -90,16 +90,33 @@ public class InventorySlot
 
         if (transfer == 0) return 0;
 
-        items = new Items { item = Items.item, count = Items.count - transfer, metaInfo = Items.metaInfo };
-        
+        Items = new Items { item = Items.item, count = Items.count - transfer, metaInfo = Items.metaInfo };
+
         ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs
         {
             Inventory = inventory,
             NewItems = Items,
             Slot = this
-        });;
+        });
 
         return transfer;
+    }
+
+    public void Swap(InventorySlot other)
+    {
+        if (other.Items is null) return;
+        var temp = new Items
+            { item = other.Items.item, count = other.Items.count, metaInfo = other.Items.metaInfo };
+        other.Items = Items;
+        Items = temp;
+        ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs
+        {
+            Inventory = inventory, NewItems = Items, Slot = this
+        });
+        ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs
+        {
+            Inventory = other.inventory, NewItems = other.Items, Slot = other
+        });
     }
 }
 

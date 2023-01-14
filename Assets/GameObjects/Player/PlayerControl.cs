@@ -26,16 +26,16 @@ namespace GameObjects.Player
         [Space(10)] [Header("Inventory")]
         public Inventory myInventory;
 
-        private void Awake()
+        private new void Awake()
         {
+            base.Awake();
             Main = this;
             myInventory = GetComponent<Inventory>();
         }
 
 
-        private new void Start()
+        private void Start()
         {
-            base.Start();
             _mainCamera = Camera.main;
             GameManager.Player = this;
 
@@ -78,10 +78,10 @@ namespace GameObjects.Player
             MyRigidbody.AddForce(control * speed);
         }
         
-        protected override void Die()
+        public override void Die()
         {
             Debug.LogWarning("Ты умер, но Иван дал тебе новый шанс");
-            hp = maxHp;
+            Hp = MaxHp;
         }
     }
 }

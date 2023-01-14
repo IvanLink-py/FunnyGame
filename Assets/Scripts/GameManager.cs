@@ -72,17 +72,17 @@ public class Damage
     public float ArmorAmount;
 
     public float HpAmount;
-    [CanBeNull] public Entity Shooter;
+    [CanBeNull] public GameObject Source;
     public Entity Target;
 
     public DamageType Type;
 
-    public Damage([CanBeNull] Entity shooter, Entity target, DamageType type, float hpAmount, float armorAmount)
+    public Damage([CanBeNull] GameObject source, Entity target, DamageType type, float hpAmount, float armorAmount)
     {
         Type = type;
         HpAmount = hpAmount;
         ArmorAmount = armorAmount;
-        Shooter = shooter;
+        Source = source;
         Target = target;
     }
 }

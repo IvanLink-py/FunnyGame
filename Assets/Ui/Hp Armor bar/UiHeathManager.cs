@@ -34,8 +34,8 @@ public class UiHeathManager : MonoBehaviour
         
         UpdateAmmoInfo();
 
-        UpdateIndicator(ref hpBar, PlayerControl.Main.maxHp, PlayerControl.Main.hp);
-        UpdateIndicator(ref armorBar, PlayerControl.Main.armorMax, PlayerControl.Main.armor);
+        UpdateIndicator(ref hpBar, PlayerControl.Main.MaxHp, PlayerControl.Main.Hp);
+        UpdateIndicator(ref armorBar, PlayerControl.Main.ArmorMax, PlayerControl.Main.Armor);
     }
 
     private void OnShootingManagerEvent(ShootingManagerEventArgs args)

@@ -3,42 +3,21 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Entity : MonoBehaviour
+public class Entity : MonoBehaviour, IDestructible
 {
-    [Header("HP & Armor")] public float hp;
-    public float maxHp;
-    public float armor;
-    public float armorMax;
-    public float armorAbsorption;
-    private bool _isDead;
+    [field: Header("HP & Armor")] public float Hp { get; set; } = 100;
+    public float MaxHp { get; set; } = 100;
+    public float Armor { get; set; } = 100;
+    public float ArmorMax { get; set; } = 100;
+    public float ArmorAbsorption { get; set; } = 10;
+    public bool IsDead { get; private set; }
 
     [Header("Drop")] [CanBeNull] public DropTable myDropTable;
 
     public event UnityAction<EntityHpChangedEventArgs> HpChanged;
     public event UnityAction<EntityArmorChangedEventArgs> ArmorChanged;
     public event UnityAction<EntityDeathEventArgs> Death;
-
-
-    public void OnBulletHit(Bullet bullet)
-    {
-        OnDamageTake(bullet.myInfo.damage, bullet.shooter, DamageType.Shoot);
-    }
-
-    public void OnMeleeHit(EnemyConrol enemy)
-    {
-        OnDamageTake(enemy.damage, enemy, DamageType.Melee);
-    }
-
-    public void OnEnvHit(float damage)
-    {
-        OnDamageTake(damage, null, DamageType.Env);
-    }
-
-    public void OnExplosionHit(Explosion explosion)
-    {
-        OnDamageTake(explosion.damage, PlayerControl.Main, DamageType.Explosion);
-    }
-
+    
     public Vector3 Forward
     {
         get
@@ -72,26 +51,26 @@ public class Entity : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, targetRotation - 90);
     }
 
-    public void Heal(float health, [CanBeNull] Entity source)
+    public void Heal(float health)
     {
-        OnDamageTake(-health, source, DamageType.Heal);
+        DamageTake(-health, null, DamageType.Heal);
     }
 
-    private void OnDamageTake(float damage, [CanBeNull] Entity source, DamageType type)
+    public void DamageTake(float damage, GameObject source, DamageType type)
     {
-        var oldStat = (hp, armor);
+        var oldStat = (Hp, Armor);
 
         if (damage > 0)
         {
-            var absorption = armor / armorMax * armorAbsorption;
+            var absorption = Armor / ArmorMax * ArmorAbsorption;
 
 
-            var armorOld = armor;
-            armor = Mathf.Max(0, armor - damage / armorAbsorption);
-            if (armorOld - armor != 0)
+            var armorOld = Armor;
+            Armor = Mathf.Max(0, Armor - damage / ArmorAbsorption);
+            if (armorOld - Armor != 0)
                 ArmorChanged?.Invoke(new EntityArmorChangedEventArgs
                 {
-                    Entity = this, NewValue = hp, OldValue = armorOld, MaxValue = armorMax
+                    Entity = this, NewValue = Armor, OldValue = armorOld, MaxValue = ArmorMax
                 });
 
             damage -= absorption;
@@ -99,29 +78,29 @@ public class Entity : MonoBehaviour
             if (!(damage > 0)) return;
         }
 
-        var hpOld = hp;
-        hp = Mathf.Min(hp - damage, maxHp);
+        var hpOld = Hp;
+        Hp = Mathf.Min(Hp - damage, MaxHp);
 
         HpChanged?.Invoke(new EntityHpChangedEventArgs
         {
-            Entity = this, NewValue = hp, OldValue = hpOld, MaxValue = maxHp
+            Entity = this, NewValue = Hp, OldValue = hpOld, MaxValue = MaxHp
         });
 
         GameManager.OnHit(new Damage(
             source,
             this,
             type,
-            hp - oldStat.hp,
-            armor - oldStat.armor));
+            Hp - oldStat.Hp,
+            Armor - oldStat.Armor));
 
-        if (hp <= 0) Die();
+        if (Hp <= 0) Die();
     }
 
-    protected virtual void Die()
+    public virtual void Die()
     {
-        if (_isDead) return;
-        _isDead = true;
-        
+        if (IsDead) return;
+        IsDead = true;
+
         Death?.Invoke(new EntityDeathEventArgs());
 
         if (myDropTable is not null)

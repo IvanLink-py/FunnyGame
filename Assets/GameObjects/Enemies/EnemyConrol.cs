@@ -59,7 +59,7 @@ public class EnemyConrol : RigidbodyEntity
             case AIState.Attack:
                 if (TargetInRadius())
                 {
-                    target.OnMeleeHit(this);
+                    target.DamageTake(damage, gameObject, DamageType.Melee);
                 }
 
                 myState = AIState.Going;
@@ -75,7 +75,7 @@ public class EnemyConrol : RigidbodyEntity
         return target is not null && (transform.position - target.transform.position).magnitude < attackRadius;
     }
 
-    protected override void Die()
+    public override void Die()
     {
         base.Die();
     }

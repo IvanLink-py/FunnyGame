@@ -31,7 +31,7 @@ public class Explosive : Bullet
     {
         var go = col.gameObject;
         if (!go.CompareTag("Entity")) return;
-        go.GetComponent<Entity>().OnEnvHit(rig2D.velocity.magnitude/5f);
+        (go.GetComponent(typeof(IDestructible)) as IDestructible)?.DamageTake(rig2D.velocity.magnitude/5f, null, DamageType.Env);
     }
     
 }

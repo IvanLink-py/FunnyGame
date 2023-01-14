@@ -14,7 +14,7 @@ public class UsableInfo : ItemInfo
         switch (useAction)
         {
             case UseAction.Heal:
-                user.Heal(useActionProp, user);
+                user.Heal(useActionProp);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

@@ -39,7 +39,7 @@ public class Bullet : MonoBehaviour
         if (go.CompareTag("Terrain")) Destroy(gameObject);
         
         if (!go.CompareTag("Entity")) return;
-        go.GetComponent<Entity>().OnBulletHit(this);
+        go.GetComponent<IDestructible>()?.DamageTake(myInfo.damage, null, DamageType.Shoot);
         Destroy(gameObject);
     }
 }

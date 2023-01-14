@@ -19,8 +19,8 @@ MonoBehaviour:
     maxAmount: 1
   - item: {fileID: 11400000, guid: 7a13db64c3c230742b2421dc417f074d, type: 2}
     rare: 1
-    minAmount: 3
-    maxAmount: 3
+    minAmount: 100
+    maxAmount: 100
   - item: {fileID: 11400000, guid: 7c163f62e83dd20489afaab0266dc745, type: 2}
     rare: 1
     minAmount: 1

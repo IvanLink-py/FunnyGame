@@ -10,6 +10,7 @@ public class Entity : MonoBehaviour
     public float armor;
     public float armorMax;
     public float armorAbsorption;
+    private bool _isDead;
 
     [Header("Drop")] [CanBeNull] public DropTable myDropTable;
 
@@ -118,6 +119,9 @@ public class Entity : MonoBehaviour
 
     protected virtual void Die()
     {
+        if (_isDead) return;
+        _isDead = true;
+        
         Death?.Invoke(new EntityDeathEventArgs());
 
         if (myDropTable is not null)

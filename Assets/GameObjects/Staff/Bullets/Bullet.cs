@@ -19,6 +19,10 @@ public class Bullet : MonoBehaviour
         rig2D = GetComponent<Rigidbody2D>();
         rig2D.velocity = velocity;
         ttl = myInfo.ttl - myInfo.ttl * Random.value * myInfo.ttlRnd;
+        
+        var targetRotation = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, targetRotation);
+        
     }
 
     protected virtual void Update()

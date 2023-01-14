@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameObjects.Player;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
@@ -94,6 +96,13 @@ public class UiManager : MonoBehaviour
     private void InventoryUpdate()
     {
         if (Input.GetKeyDown(inventoryOpenKey)) ChangeInventoryState();
+        if (InUi && Input.GetMouseButtonDown(0)) CheckCursorDrop();
+    }
+
+    private void CheckCursorDrop()
+    {
+        if ((CurrentState == UiState.Inventory || CurrentState == UiState.Dialog) && !IsPointerOverUIElement())
+            cursorSlot.Drop(PlayerControl.Main.transform.position + PlayerControl.Main.Forward);
     }
 
     private void ChangeInventoryState()
@@ -125,6 +134,7 @@ public class UiManager : MonoBehaviour
         invPresenter.UpdateSlots();
         Cursor.visible = InUi;
         aim.gameObject.SetActive(!InUi);
+        if (!InUi) cursorSlot.Drop(PlayerControl.Main.transform.position + PlayerControl.Main.Forward * 0.5f);
     }
 
     public static bool CanShoot()

@@ -49,7 +49,6 @@ namespace GameObjects.Player
         {
             Movement();
             Aim();
-            
         }
 
         private void Update()

@@ -69,7 +69,17 @@ public class InventorySlot
         return amount;
     }
 
-
+    public void Drop(Vector3 pos)
+    {
+        if (Items is null) return;
+        GameManager.ItemDrop(Items, pos);
+        Items = null;
+        ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs
+        {
+            Inventory = inventory, Slot = this, NewItems = Items
+        });
+    }
+    
     public int TransferTo(InventorySlot receiver, TakeMode mode)
     {
         if (Items is null) return 0;

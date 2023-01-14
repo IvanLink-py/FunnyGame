@@ -118,6 +118,7 @@ MonoBehaviour:
   items:
     item: {fileID: 11400000, guid: 16258a2b183ef414a81e5f8e051feb23, type: 2}
     count: 10
+  cantPickTimer: 2
 --- !u!50 &832452883688991699
 Rigidbody2D:
   serializedVersion: 4
@@ -131,8 +132,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 2
-  m_AngularDrag: 0.05
+  m_LinearDrag: 10
+  m_AngularDrag: 7
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0

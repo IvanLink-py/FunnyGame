@@ -13,6 +13,7 @@ namespace GameObjects.Player
         [Space(10)] [Header("Control")] 
         [SerializeField] private float speed = 180;
         [SerializeField] private Transform gunFire;
+        [SerializeField] private DropTable startItems;
 
         // public event UnityAction<PlayerHungerChangedEventArgs> HungerChanged;
         // public event UnityAction<PlayerStaminaChangedEventArgs> StaminaChanged;
@@ -38,8 +39,10 @@ namespace GameObjects.Player
             _mainCamera = Camera.main;
             GameManager.Player = this;
 
-            myInventory.TryPut(new Items { item = GameManager.MainItemDB.GetItemInfo("wpn_assault_rifle"), count = 1 });
-            myInventory.TryPut(new Items { item = GameManager.MainItemDB.GetItemInfo("ammo_machine_gun"), count = 100 });
+            foreach (var item in startItems.Realise())
+            {
+                myInventory.TryPut(item);
+            }
         }
 
         void FixedUpdate()

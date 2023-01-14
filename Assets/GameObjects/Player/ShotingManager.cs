@@ -35,7 +35,7 @@ public class ShotingManager : MonoBehaviour
 
     public int AmmoInMag => currentGun is null ? 0 : _ammoInMag;
     public int AmmoMaxInMag => currentGun is null ? 0 : currentGun.gunInfo.ammoInMag;
-    public int AmmoHave => (currentGun is null ? 0 : _myInv.Count(currentGun.ammoItemInfo)) + _ammoInMag;
+    public int AmmoHave => (currentGun is null ? 0 : _myInv.Count(currentGun.ammoItemInfo));
     public Sprite? AmmoPic => currentGun?.ammoItemInfo.image;
 
     private void Awake()
@@ -99,12 +99,12 @@ public class ShotingManager : MonoBehaviour
         {
             StopCoroutine(_reloadRoutine);
             _inReload = false;
-            ReloadAbort?.Invoke(new ReloadAbortEventArgs {CurrentAmmoInMag = _ammoInMag});
+            ReloadAbort?.Invoke(new ReloadAbortEventArgs { CurrentAmmoInMag = _ammoInMag });
         }
 
         if (_inReload && !CurrentGunInfo.isSingleAmmoLoad) return;
 
-        if (_ammoInMag <= 0)
+        if (_ammoInMag <= 0 && !CurrentGunInfo.isPostLoad)
         {
             Reload();
             return;
@@ -119,15 +119,8 @@ public class ShotingManager : MonoBehaviour
     {
         if (_inReload || AmmoHave == 0 ||
             (CurrentGunInfo.isSingleAmmoLoad && _ammoInMag == CurrentGunInfo.ammoInMag)) return;
-        _reloadRoutine = ReloadCoroutine();
+        _reloadRoutine = ReloadCoroutine(CurrentGunInfo.reloadTime);
         StartCoroutine(_reloadRoutine);
-        ReloadBegin?.Invoke(new ReloadBeginEventArgs
-        {
-            CurrentAmmoInMag = _ammoInMag,
-            Duration = CurrentGunInfo.isSingleAmmoLoad
-                ? CurrentGunInfo.reloadTime * (CurrentGunInfo.ammoInMag - _ammoInMag)
-                : CurrentGunInfo.reloadTime
-        });
     }
 
     private void Moving()
@@ -142,62 +135,88 @@ public class ShotingManager : MonoBehaviour
 
         GameManager.Shoot(position, _player.Forward, CurrentGunInfo, _player);
         _player.MyRigidbody.AddForce(-_player.Forward * CurrentGunInfo.recoil);
-        
+
         Moving();
         _ammoInMag--;
 
         ShootEvent?.Invoke(new ShootEventArgs { CurrentAmmoInMag = _ammoInMag });
 
         if (!CurrentGunInfo.isFullAmmo) _inWaitingForTriggerRelease = true;
-        if (_ammoInMag == 0) Reload();
+        if (_ammoInMag <= 0) Reload();
     }
 
     public void SwitchGun(WeaponInfo? newGun)
     {
-        if (currentGun is not null)
+        if (currentGun is not null && !CurrentGunInfo.isPostLoad)
             _myInv.PutOrDrop(new Items { item = currentGun.ammoItemInfo, count = _ammoInMag }, transform.position);
 
         currentGun = newGun;
-        _ammoInMag = 0;
+        _ammoInMag = currentGun is null || !CurrentGunInfo.isPostLoad ? 0 : CurrentGunInfo.ammoInMag;
+
 
         StopAllCoroutines();
 
         _inMoving = false;
         _inReload = false;
         _inWaitingForTriggerRelease = false;
-        
+
         WeaponChange?.Invoke(new WeaponChangeEventArgs
         {
-            CurrentAmmoInMag = 0, CurrentAmmoType = newGun is null? null : newGun.ammoItemInfo
+            CurrentAmmoInMag = _ammoInMag, CurrentAmmoType = newGun is null ? null : newGun.ammoItemInfo
         });
 
         if (newGun is null) return;
         Reload();
     }
 
-    private IEnumerator ReloadCoroutine()
+    private IEnumerator ReloadCoroutine(float reloadTime)
     {
         _inReload = true;
-        if (!CurrentGunInfo.isSingleAmmoLoad)
+        if (!CurrentGunInfo.isSingleAmmoLoad && !CurrentGunInfo.isPostLoad)
         {
             _myInv.PutOrDrop(new Items { item = currentGun.ammoItemInfo, count = _ammoInMag }, transform.position);
             _ammoInMag = 0;
         }
 
-        yield return new WaitForSeconds(CurrentGunInfo.reloadTime);
+        if (CurrentGunInfo.isPostLoad)
+        {
+            var take = _myInv.TryTake(currentGun.ammoItemInfo,
+                CurrentGunInfo.isSingleAmmoLoad ? 1 : CurrentGunInfo.ammoInMag - _ammoInMag);
+            if (currentGun is not null) _ammoInMag += take;
+        }
 
-        _ammoInMag += _myInv.TryTake(currentGun.ammoItemInfo,
-            CurrentGunInfo.isSingleAmmoLoad ? 1 : CurrentGunInfo.ammoInMag);
+        if (currentGun is not null)
+            ReloadBegin?.Invoke(new ReloadBeginEventArgs
+            {
+                CurrentAmmoInMag = _ammoInMag,
+                Duration = CurrentGunInfo.isSingleAmmoLoad
+                    ? CurrentGunInfo.reloadTime * (CurrentGunInfo.ammoInMag - _ammoInMag)
+                    : CurrentGunInfo.reloadTime
+            });
+
+        yield return new WaitForSeconds(reloadTime);
+
+        if (!CurrentGunInfo.isPostLoad)
+            _ammoInMag += _myInv.TryTake(currentGun.ammoItemInfo,
+                CurrentGunInfo.isSingleAmmoLoad ? 1 : CurrentGunInfo.ammoInMag - _ammoInMag);
 
         if (_ammoInMag < CurrentGunInfo.ammoInMag && CurrentGunInfo.isSingleAmmoLoad)
         {
-            _reloadRoutine = ReloadCoroutine();
+            _reloadRoutine = ReloadCoroutine(CurrentGunInfo.reloadTime);
             StartCoroutine(_reloadRoutine);
         }
         else
         {
             _inReload = false;
-            ReloadEnds?.Invoke(new ReloadEndsEventArgs {CurrentAmmoInMag = _ammoInMag});
+            if (!CurrentGunInfo.isPostLoad)
+                ReloadEnds?.Invoke(new ReloadEndsEventArgs { CurrentAmmoInMag = _ammoInMag });
+        }
+
+        if (CurrentGunInfo.isPostLoad)
+        {
+            _ammoInMag += _myInv.TryTake(currentGun.ammoItemInfo,
+                CurrentGunInfo.isSingleAmmoLoad ? 1 : CurrentGunInfo.ammoInMag - _ammoInMag);
+            ReloadEnds?.Invoke(new ReloadEndsEventArgs { CurrentAmmoInMag = _ammoInMag });
         }
     }
 

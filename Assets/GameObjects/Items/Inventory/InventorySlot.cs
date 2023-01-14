@@ -118,6 +118,18 @@ public class InventorySlot
             Inventory = other.inventory, NewItems = other.Items, Slot = other
         });
     }
+
+    public int TryTake(ItemInfo itemInfo, int count)
+    {
+        if (Items is null || !Items.item.Equals(itemInfo)) return 0;
+        var take = Mathf.Min(Items.count, count);
+        Items.count -= take;
+        ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs
+        {
+            Inventory = inventory, NewItems = Items, Slot = this
+        });
+        return take;
+    }
 }
 
 public enum SlotType

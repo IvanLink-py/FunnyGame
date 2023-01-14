@@ -118,10 +118,8 @@ public class Inventory : MonoBehaviour
 
         foreach (var slot in slots)
         {
-            if (slot.Items is null || slot.Items.item != itemType) continue;
-            var take = Mathf.Min(slot.Items.count, count - got);
+            var take = slot.TryTake(itemType, count-got);
             got += take;
-            slot.Items.count -= take;
 
             ((List<InventorySlot>)eventArgs.Slots).Add(slot);
             eventArgs.ItemsLost.count += take;

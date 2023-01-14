@@ -18,7 +18,9 @@ MonoBehaviour:
   ttl: 10
   ttlRnd: 0
   damage: 0
-  isFullAmmo: 0
+  isFullAmmo: 1
+  isSingleAmmoLoad: 0
+  isPostLoad: 1
   count: 1
   recoil: 0
   rate: 100

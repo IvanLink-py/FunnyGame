@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af5552b2ae1b3ea448103257c6065d96, type: 3}
-  m_Name: Rife
+  m_Name: Explosion
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 3356160940865921444, guid: 2bffac980f9039f458d152292a6e97c6, type: 3}
   speed: 50
   size: 0.2
-  ttl: 1.5
-  ttlRnd: 0
+  ttl: 0.2
+  ttlRnd: 1
   damage: 50
-  isFullAmmo: 1
+  isFullAmmo: 0
   isSingleAmmoLoad: 0
   isPostLoad: 0
-  count: 1
-  recoil: 10
-  rate: 7
-  ammoInMag: 30
-  reloadTime: 1.8
-  scatter: 0
+  count: 15
+  recoil: 0
+  rate: 0
+  ammoInMag: 0
+  reloadTime: 0
+  scatter: 360

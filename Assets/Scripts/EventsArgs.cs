@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 
 #region Inventory Events args
@@ -61,6 +62,7 @@ public abstract class EntityIndicatorsChangedEventArgs : EventArgs
     public Entity Entity;
     public float OldValue;
     public float NewValue;
+    public float MaxValue;
 }
 
 public class EntityHpChangedEventArgs : EntityIndicatorsChangedEventArgs
@@ -90,6 +92,37 @@ public class PlayerHungerChangedEventArgs : EntityIndicatorsChangedEventArgs
 
 public class PlayerThirstChangedEventArgs : EntityIndicatorsChangedEventArgs
 {
+}
+
+#endregion
+
+#region ShotingManager Events args
+
+public abstract class ShootingManagerEventArgs : EventArgs
+{
+    public int CurrentAmmoInMag;
+}
+
+public class ReloadBeginEventArgs : ShootingManagerEventArgs
+{
+    public float Duration;
+}
+
+public class ReloadEndsEventArgs : ShootingManagerEventArgs
+{
+}
+
+public class ReloadAbortEventArgs : ShootingManagerEventArgs
+{
+}
+
+public class ShootEventArgs : ShootingManagerEventArgs
+{
+}
+
+public class WeaponChangeEventArgs : ShootingManagerEventArgs
+{
+    [CanBeNull] public ItemInfo CurrentAmmoType;
 }
 
 #endregion

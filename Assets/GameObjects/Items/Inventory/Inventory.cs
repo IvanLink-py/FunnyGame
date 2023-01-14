@@ -58,6 +58,7 @@ public class Inventory : MonoBehaviour
 
         args.CurrentSlot = selectedHotBarSlot;
         ActiveSlotChanged?.Invoke(args);
+        ActiveSlotContentChanged?.Invoke(new InventoryActiveSlotContentChangedEventArgs { NewItems = slot.Items });
     }
 
     public void SetSelectedSlot(int n) =>
@@ -94,7 +95,7 @@ public class Inventory : MonoBehaviour
     public void PutOrDrop(Items items, Vector3 dropPos)
     {
         TryPut(items);
-        if (items.count != 0) return;
+        if (items.count == 0) return;
         GameManager.ItemDrop(items, dropPos);
     }
 
@@ -117,10 +118,8 @@ public class Inventory : MonoBehaviour
 
         foreach (var slot in slots)
         {
-            if (slot.Items is null || slot.Items.item != itemType) continue;
-            var take = Mathf.Min(slot.Items.count, count - got);
+            var take = slot.TryTake(itemType, count-got);
             got += take;
-            slot.Items.count -= got;
 
             ((List<InventorySlot>)eventArgs.Slots).Add(slot);
             eventArgs.ItemsLost.count += take;

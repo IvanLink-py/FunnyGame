@@ -46,7 +46,7 @@ public class UiBar : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
     }
@@ -54,11 +54,7 @@ public class UiBar : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // // Для дебага
-        // CurrentValue = (Mathf.Sin(Time.frameCount / 1000f) + 1) * 50;
-        // Debug.Log(CurrentValue);
-        // // Можно удалить
-
+        UpdateValue();
         if (!heartBeat) return;
         _heartBeatTime += Time.deltaTime;
 

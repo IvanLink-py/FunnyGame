@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GameObjects.Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class UiHeathManager : MonoBehaviour
     [SerializeField] private UiBar hungerBar;
     [SerializeField] private UiBar thirstBar;
 
+
     [Header("Weapon info")] [SerializeField]
     private Text ammoInMagLabel;
 
@@ -21,34 +23,44 @@ public class UiHeathManager : MonoBehaviour
 
     private void Start()
     {
-        PlayerControl.Main.HpChanged += arg0 =>
-        {
-            hpBar.MaxValue = PlayerControl.Main.maxHp;
-            hpBar.CurrentValue = arg0.NewValue;
-        };
+        PlayerControl.Main.HpChanged += UpdateHp;
+        PlayerControl.Main.ArmorChanged += UpdateArmor;
+
+        ShotingManager.Instance.ReloadBegin += OnShootingManagerEvent;
+        ShotingManager.Instance.ReloadEnds += OnShootingManagerEvent;
+        ShotingManager.Instance.ReloadAbort += OnShootingManagerEvent;
+        ShotingManager.Instance.WeaponChange += OnShootingManagerEvent;
+        ShotingManager.Instance.ShootEvent += OnShootingManagerEvent;
         
-        PlayerControl.Main.ArmorChanged += arg0 =>
-        {
-            armorBar.MaxValue = PlayerControl.Main.armorMax;
-            armorBar.CurrentValue = arg0.NewValue;
-        };
-        
-        hpBar.MaxValue = PlayerControl.Main.maxHp;
-        hpBar.CurrentValue = PlayerControl.Main.hp;
-        armorBar.MaxValue = PlayerControl.Main.armorMax;
-        armorBar.CurrentValue = PlayerControl.Main.armor;
+        UpdateAmmoInfo();
+
+        UpdateIndicator(ref hpBar, PlayerControl.Main.maxHp, PlayerControl.Main.hp);
+        UpdateIndicator(ref armorBar, PlayerControl.Main.armorMax, PlayerControl.Main.armor);
     }
 
-    private void FixedUpdate()
+    private void OnShootingManagerEvent(ShootingManagerEventArgs args)
     {
-        Show();
+        UpdateAmmoInfo();
     }
 
-    private void Show()
+    private void UpdateIndicator(ref UiBar bar, EntityIndicatorsChangedEventArgs args) =>
+        UpdateIndicator(ref bar, args.MaxValue, args.NewValue);
+
+    private void UpdateIndicator(ref UiBar bar, float max, float current)
+    {
+        bar.MaxValue = max;
+        bar.CurrentValue = current;
+    }
+
+    private void UpdateHp(EntityIndicatorsChangedEventArgs arg0) => UpdateIndicator(ref hpBar, arg0);
+    private void UpdateArmor(EntityIndicatorsChangedEventArgs arg0) => UpdateIndicator(ref armorBar, arg0);
+
+
+    private void UpdateAmmoInfo()
     {
         ammoInMagLabel.text = ShotingManager.Instance.AmmoInMag.ToString();
         ammoMaxInMagLabel.text = ShotingManager.Instance.AmmoMaxInMag.ToString();
-        ammoHaveLabel.text = ShotingManager.Instance.AmmoHave <= 1 ? "" : ShotingManager.Instance.AmmoHave.ToString();
+        ammoHaveLabel.text = ShotingManager.Instance.AmmoHave == 0 ? "" : ShotingManager.Instance.AmmoHave.ToString();
 
         if (ShotingManager.Instance.AmmoPic is not null)
         {

@@ -21,7 +21,7 @@ public class Explosive : Bullet
         if (timeRemaining <= 0) Boom();
     }
 
-    private void Boom()
+    public void Boom()
     {
         GameManager.Boom(transform.position, expPrefab);
         Destroy(gameObject);

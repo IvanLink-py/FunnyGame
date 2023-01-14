@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu]
 public class GunInfo : ScriptableObject
@@ -15,6 +16,9 @@ public class GunInfo : ScriptableObject
 
     [Header("Weapon data")]
     public bool isFullAmmo;
+    public bool isSingleAmmoLoad;
+    public bool isPostLoad;
+    
     public int count;
     public float recoil;
     public float rate;

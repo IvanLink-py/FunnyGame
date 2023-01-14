@@ -10,6 +10,7 @@ public class Entity : MonoBehaviour
     public float armor;
     public float armorMax;
     public float armorAbsorption;
+    private bool _isDead;
 
     [Header("Drop")] [CanBeNull] public DropTable myDropTable;
 
@@ -90,7 +91,7 @@ public class Entity : MonoBehaviour
             if (armorOld - armor != 0)
                 ArmorChanged?.Invoke(new EntityArmorChangedEventArgs
                 {
-                    Entity = this, NewValue = hp, OldValue = armorOld
+                    Entity = this, NewValue = hp, OldValue = armorOld, MaxValue = armorMax
                 });
 
             damage -= absorption;
@@ -103,7 +104,7 @@ public class Entity : MonoBehaviour
 
         HpChanged?.Invoke(new EntityHpChangedEventArgs
         {
-            Entity = this, NewValue = hp, OldValue = hpOld
+            Entity = this, NewValue = hp, OldValue = hpOld, MaxValue = maxHp
         });
 
         GameManager.OnHit(new Damage(
@@ -118,6 +119,9 @@ public class Entity : MonoBehaviour
 
     protected virtual void Die()
     {
+        if (_isDead) return;
+        _isDead = true;
+        
         Death?.Invoke(new EntityDeathEventArgs());
 
         if (myDropTable is not null)

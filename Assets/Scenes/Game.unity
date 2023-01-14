@@ -546,7 +546,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1553985027}
   m_HandleRect: {fileID: 0}
@@ -2266,6 +2266,7 @@ MonoBehaviour:
   MyRigidbody: {fileID: 0}
   speed: 180
   gunFire: {fileID: 1017141892}
+  startItems: {fileID: 11400000, guid: 99683d36caa4bc646aa6dca97c8dce4b, type: 2}
   myInventory: {fileID: 1244890023}
 --- !u!114 &1244890023
 MonoBehaviour:
@@ -2422,7 +2423,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heathManager: {fileID: 1401564798}
   aim: {fileID: 295369994}
-  inUi: 0
   inventory: {fileID: 1928404495}
   invPresenter: {fileID: 1809703613}
   inventoryOpenKey: 9
@@ -2619,7 +2619,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1111115406}
   m_HandleRect: {fileID: 0}
@@ -3615,7 +3615,6 @@ MonoBehaviour:
     items:
       item: {fileID: 0}
       count: 0
-  selfUpdate: 1
   itemIcon: {fileID: 2760066146382049935}
   itemCount: {fileID: 6807746375344659907}
 --- !u!1 &8103021331013068854

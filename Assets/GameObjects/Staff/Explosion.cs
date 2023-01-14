@@ -36,6 +36,5 @@ public class Explosion : MonoBehaviour
         if ((!o.CompareTag("Entity") && !o.CompareTag("Player")) || _explosionTouched.Contains(o)) return;
         o.GetComponent<Entity>().OnExplosionHit(this);
         _explosionTouched.Add(o);
-        Debug.Log("Explosion touch");
     }
 }

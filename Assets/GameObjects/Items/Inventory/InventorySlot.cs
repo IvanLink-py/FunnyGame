@@ -113,7 +113,7 @@ public class InventorySlot
         {
             Inventory = inventory, NewItems = Items, Slot = this
         });
-        ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs
+        other.ContentChanged?.Invoke(new InventorySlotContentChangedEventArgs
         {
             Inventory = other.inventory, NewItems = other.Items, Slot = other
         });

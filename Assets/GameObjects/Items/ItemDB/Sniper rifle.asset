@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: wpn_rifle
   showName: "\u0421\u043D\u0430\u0439\u043F\u0435\u0440\u0441\u043A\u0430\u044F \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430"
-  image: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  image: {fileID: -1076589526, guid: f9baa5bc3a700054f970dc899c300f95, type: 3}
   stackSize: 1
   gunInfo: {fileID: 11400000, guid: b5e3ee783f71ccc47a9caa2fd8c4bbeb, type: 2}
   ammoItemInfo: {fileID: 11400000, guid: d17b35440e9f2d94d8686c8ae904e07a, type: 2}

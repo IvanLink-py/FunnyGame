@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
+
+        ((PlaceableInfo)MainItemDB.GetItemInfo("blc_wood")).PlaceableType = typeof(WoodArmor);
     }
 
     public static void Shoot(Vector2 pos, Vector2 dir, GunInfo gunInfo, Entity shooter)

@@ -41,6 +41,9 @@ public abstract class ArmorBlock : MonoBehaviour, IBuilding
     public virtual void Place()
     {
         Hp = MaxHp;
+        Sprite = Sprite.Create(Resources.LoadAll<Texture2D>("Blocks")[0], new Rect(0,0,32,32), Vector2.one / 2f, 32);
+        GetComponent<SpriteRenderer>().sprite = Sprite;
+        GetComponent<BoxCollider2D>().size = Vector2.one;
     }
 
     public bool CanRepair()

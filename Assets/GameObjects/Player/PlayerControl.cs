@@ -10,21 +10,23 @@ namespace GameObjects.Player
     {
         public static PlayerControl Main;
 
-        [Space(10)] [Header("Control")] 
-        [SerializeField] private float speed = 180;
+        [Space(10)] [Header("Control")] [SerializeField]
+        private float speed = 180;
+
         [SerializeField] private Transform gunFire;
         [SerializeField] private DropTable startItems;
+        [SerializeField] private GameObject blockPrefab;
+        private bool canPlace;
 
         // public event UnityAction<PlayerHungerChangedEventArgs> HungerChanged;
         // public event UnityAction<PlayerStaminaChangedEventArgs> StaminaChanged;
         // public event UnityAction<PlayerThirstChangedEventArgs> ThirstChanged;
 
         private Camera _mainCamera;
-        
+
         private int _ammoInMag;
 
-        [Space(10)] [Header("Inventory")]
-        public Inventory myInventory;
+        [Space(10)] [Header("Inventory")] public Inventory myInventory;
 
         private new void Awake()
         {
@@ -54,9 +56,10 @@ namespace GameObjects.Player
         private void Update()
         {
             HotBarControl();
+            Place();
         }
 
-        private void HotBarControl()    
+        private void HotBarControl()
         {
             for (var i = 0; i < 8; i++)
             {
@@ -65,7 +68,27 @@ namespace GameObjects.Player
             }
         }
 
-        
+        private void Place()
+        {
+            if (!canPlace && Input.GetAxis("Fire1") < 0.5f) canPlace = true;
+            if (!canPlace || Input.GetAxis("Fire1") < 0.5f) return;
+
+            if (myInventory.selectedHotBarSlot.Items is null ||
+                myInventory.selectedHotBarSlot.Items.item.GetType() != typeof(PlaceableInfo)) return;
+
+            var instantiate = Instantiate(blockPrefab);
+            
+            var transformPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            transformPosition.z = 1;
+            instantiate.transform.position = transformPosition;
+            
+            var t = ((PlaceableInfo)myInventory.selectedHotBarSlot.Items.item).PlaceableType;
+            var building = (IBuilding)instantiate.AddComponent(t);
+
+            building.Place();
+            canPlace = false;
+        }
+
         private void Aim()
         {
             LookAt(_mainCamera.ScreenToWorldPoint(Input.mousePosition), gunFire.position);
@@ -77,7 +100,7 @@ namespace GameObjects.Player
             control.Normalize();
             MyRigidbody.AddForce(control * speed);
         }
-        
+
         public override void Die()
         {
             Debug.LogWarning("Ты умер, но Иван дал тебе новый шанс");

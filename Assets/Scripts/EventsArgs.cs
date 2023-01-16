@@ -59,7 +59,7 @@ public class UiStateChangedEventArgs : EventArgs
 
 public abstract class EntityIndicatorsChangedEventArgs : EventArgs
 {
-    public Entity Entity;
+    public IDestructible Entity;
     public float OldValue;
     public float NewValue;
     public float MaxValue;
@@ -75,7 +75,7 @@ public class EntityArmorChangedEventArgs : EntityIndicatorsChangedEventArgs
 
 public class EntityDeathEventArgs : EventArgs
 {
-    public Entity Entity;
+    public IDestructible Entity;
 }
 
 #endregion

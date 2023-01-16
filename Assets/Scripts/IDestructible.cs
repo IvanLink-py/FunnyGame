@@ -17,5 +17,7 @@ public interface IDestructible
 
     void DamageTake(float damage, [CanBeNull] GameObject source, DamageType type);
     void Die();
+    
+    
 
 }

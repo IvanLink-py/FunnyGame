@@ -3,20 +3,11 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Entity : MonoBehaviour, IDestructible
+public class Entity : Destructible
 {
-    [field: Header("HP & Armor")] public float Hp { get; set; } = 100;
-    public float MaxHp { get; set; } = 100;
-    public float Armor { get; set; } = 100;
-    public float ArmorMax { get; set; } = 100;
-    public float ArmorAbsorption { get; set; } = 10;
-    public bool IsDead { get; private set; }
+    [field: Header("HP & Armor")] 
 
     [Header("Drop")] [CanBeNull] public DropTable myDropTable;
-
-    public event UnityAction<EntityHpChangedEventArgs> HpChanged;
-    public event UnityAction<EntityArmorChangedEventArgs> ArmorChanged;
-    public event UnityAction<EntityDeathEventArgs> Death;
     
     public Vector3 Forward
     {
@@ -56,57 +47,30 @@ public class Entity : MonoBehaviour, IDestructible
         DamageTake(-health, null, DamageType.Heal);
     }
 
-    public void DamageTake(float damage, GameObject source, DamageType type)
+    public override void DamageTake(float damage, GameObject source, DamageType type)
     {
-        var oldStat = (Hp, Armor);
+        var oldStat = (Hp: hp, Armor: armor);
 
-        if (damage > 0)
-        {
-            var absorption = Armor / ArmorMax * ArmorAbsorption;
-
-
-            var armorOld = Armor;
-            Armor = Mathf.Max(0, Armor - damage / ArmorAbsorption);
-            if (armorOld - Armor != 0)
-                ArmorChanged?.Invoke(new EntityArmorChangedEventArgs
-                {
-                    Entity = this, NewValue = Armor, OldValue = armorOld, MaxValue = ArmorMax
-                });
-
-            damage -= absorption;
-
-            if (!(damage > 0)) return;
-        }
-
-        var hpOld = Hp;
-        Hp = Mathf.Min(Hp - damage, MaxHp);
-
-        HpChanged?.Invoke(new EntityHpChangedEventArgs
-        {
-            Entity = this, NewValue = Hp, OldValue = hpOld, MaxValue = MaxHp
-        });
+        base.DamageTake(damage, source, type);
 
         GameManager.OnHit(new Damage(
             source,
             this,
             type,
-            Hp - oldStat.Hp,
-            Armor - oldStat.Armor));
+            hp - oldStat.Hp,
+            armor - oldStat.Armor));
 
-        if (Hp <= 0) Die();
+        CheckDie();
     }
-
-    public virtual void Die()
+    
+    protected override bool Die()
     {
-        if (IsDead) return;
-        IsDead = true;
+        if (!base.Die()) return false;
+        if (myDropTable is null) return true;
+        
+        foreach (var item in myDropTable.Realise())
+            GameManager.ItemDrop(item, transform.position);
 
-        Death?.Invoke(new EntityDeathEventArgs());
-
-        if (myDropTable is not null)
-            foreach (var item in myDropTable.Realise())
-                GameManager.ItemDrop(item, transform.position);
-
-        Destroy(gameObject);
+        return true;
     }
 }

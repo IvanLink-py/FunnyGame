@@ -78,10 +78,11 @@ namespace GameObjects.Player
             MyRigidbody.AddForce(control * speed);
         }
         
-        public override void Die()
+        protected override bool Die()
         {
             Debug.LogWarning("Ты умер, но Иван дал тебе новый шанс");
-            Hp = MaxHp;
+            hp = maxHp;
+            return false;
         }
     }
 }

@@ -8,10 +8,12 @@ using Random = UnityEngine.Random;
 [CreateAssetMenu(fileName = "DropTable", menuName = "Drop table")]
 public class DropTable : ScriptableObject
 {
+    [Range(0, 1)] public float masterRare;
+    
     public List<DropTableRecord> records;
 
     public List<Items> Realise()
-        => records.Select(record => record.Realise()).Where(a => a is not null).ToList();
+        =>  Random.value > masterRare ? new List<Items>() :records.Select(record => record.Realise()).Where(a => a is not null).ToList();
 }
 
 [Serializable]

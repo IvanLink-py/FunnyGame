@@ -34,7 +34,7 @@ public class Explosion : MonoBehaviour
         }
         
         if ((!o.CompareTag("Entity") && !o.CompareTag("Player")) || _explosionTouched.Contains(o)) return;
-        o.GetComponent<IDestructible>().DamageTake(damage, null, DamageType.Explosion);
+        o.GetComponent<Destructible>().DamageTake(damage, null, DamageType.Explosion);
         _explosionTouched.Add(o);
     }
 }

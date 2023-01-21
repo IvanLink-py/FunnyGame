@@ -74,11 +74,6 @@ public class EnemyConrol : RigidbodyEntity
     {
         return target is not null && (transform.position - target.transform.position).magnitude < attackRadius;
     }
-
-    public override void Die()
-    {
-        base.Die();
-    }
 }
 
 public enum AIState

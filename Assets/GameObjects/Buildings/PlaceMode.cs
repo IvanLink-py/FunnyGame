@@ -2,8 +2,10 @@
 using UnityEngine;
 
 [Serializable]
-public struct RotateMode
+public struct PlaceMode
 {
+    public bool gridSnap;
+    
     public bool canHorizontalFlip;
     public bool canVerticalFlip;
     

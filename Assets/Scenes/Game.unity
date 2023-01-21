@@ -2262,12 +2262,14 @@ MonoBehaviour:
   armor: 100
   armorMax: 100
   armorAbsorption: 10
+  isDead: 0
   myDropTable: {fileID: 0}
   MyRigidbody: {fileID: 0}
   speed: 180
   gunFire: {fileID: 1017141892}
   startItems: {fileID: 11400000, guid: 99683d36caa4bc646aa6dca97c8dce4b, type: 2}
   myInventory: {fileID: 1244890023}
+  canPlace: 0
 --- !u!114 &1244890023
 MonoBehaviour:
   m_ObjectHideFlags: 0

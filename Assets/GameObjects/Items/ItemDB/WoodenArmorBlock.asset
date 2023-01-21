@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4a9352de5995204cbb1b6a23e2de7f0, type: 3}
   m_Name: WoodenArmorBlock
   m_EditorClassIdentifier: 
-  id: 
-  showName: 
-  image: {fileID: 0}
-  stackSize: 0
-  buildingPrefab: {fileID: 0}
+  id: blc_wood_armor
+  showName: "\u0414\u0435\u0440\u0435\u0432\u044F\u043D\u043D\u044B\u0439 \u0431\u043B\u043E\u043A"
+  image: {fileID: 856893890, guid: 5fe4bd1c0bdae3747819b14d348ecad9, type: 3}
+  stackSize: 10
+  buildingPrefab: {fileID: 8567090685961462511, guid: e5558fca569145e4db58be153ce95028, type: 3}
   buildingPlaceMode:
     gridSnap: 0
     canHorizontalFlip: 0

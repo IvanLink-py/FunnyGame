@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d078371b18218541865e6a774059d9f, type: 3}
   m_Name: ZombieDropTable
   m_EditorClassIdentifier: 
+  masterRare: 0.2
   records:
   - item: {fileID: 11400000, guid: d4ff9de0e8711df46900515a9e7f1966, type: 2}
     rare: 0.1

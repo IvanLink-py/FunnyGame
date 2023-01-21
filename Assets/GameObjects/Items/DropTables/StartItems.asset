@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d078371b18218541865e6a774059d9f, type: 3}
   m_Name: StartItems
   m_EditorClassIdentifier: 
+  masterRare: 1
   records:
   - item: {fileID: 11400000, guid: 7aeef96432c68b14ea23ccce245a8ad4, type: 2}
     rare: 1
@@ -19,8 +20,8 @@ MonoBehaviour:
     maxAmount: 1
   - item: {fileID: 11400000, guid: 7a13db64c3c230742b2421dc417f074d, type: 2}
     rare: 1
-    minAmount: 100
-    maxAmount: 100
+    minAmount: 10
+    maxAmount: 10
   - item: {fileID: 11400000, guid: 7c163f62e83dd20489afaab0266dc745, type: 2}
     rare: 1
     minAmount: 1
@@ -29,3 +30,7 @@ MonoBehaviour:
     rare: 1
     minAmount: 100
     maxAmount: 100
+  - item: {fileID: 11400000, guid: 6dbfbbdde9f371e46b852f57c0498b48, type: 2}
+    rare: 1
+    minAmount: 10
+    maxAmount: 10

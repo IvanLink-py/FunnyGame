@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d078371b18218541865e6a774059d9f, type: 3}
   m_Name: CheatDropTable
   m_EditorClassIdentifier: 
+  masterRare: 1
   records:
   - item: {fileID: 11400000, guid: 3725f8f558629ac449f1cd819390b21c, type: 2}
     rare: 1

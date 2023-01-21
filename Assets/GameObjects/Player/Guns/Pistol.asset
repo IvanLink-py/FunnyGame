@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 3356160940865921444, guid: 2bffac980f9039f458d152292a6e97c6, type: 3}
   speed: 40
-  size: 0.2
+  size: 2
   ttl: 1
   ttlRnd: 0
   damage: 10
   isFullAmmo: 0
+  isSingleAmmoLoad: 0
+  isPostLoad: 0
   count: 1
   recoil: 0.1
   rate: 14

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 3356160940865921444, guid: 2bffac980f9039f458d152292a6e97c6, type: 3}
   speed: 40
-  size: 0.08
+  size: 2
   ttl: 1
   ttlRnd: 1
   damage: 5

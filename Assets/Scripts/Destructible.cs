@@ -11,13 +11,14 @@ public abstract class Destructible : MonoBehaviour
     public float armorMax;
     public float armorAbsorption;
     public bool isDead;
-    
+
     public event UnityAction<EntityHpChangedEventArgs> HpChanged;
     public event UnityAction<EntityArmorChangedEventArgs> ArmorChanged;
     public event UnityAction<EntityDeathEventArgs> Death;
 
     public virtual void DamageTake(float damage, [CanBeNull] GameObject source, DamageType type)
     {
+        var oldStat = (Hp: hp, Armor: armor);
         
         if (damage > 0)
         {
@@ -36,15 +37,24 @@ public abstract class Destructible : MonoBehaviour
 
             if (!(damage > 0)) return;
         }
-        
+
         hp = Mathf.Min(hp - damage, maxHp);
 
         HpChanged?.Invoke(new EntityHpChangedEventArgs
         {
             Entity = this, NewValue = hp, MaxValue = maxHp
         });
+
+        GameManager.OnHit(new Damage(
+            source,
+            this,
+            type,
+            hp - oldStat.Hp,
+            armor - oldStat.Armor));
+
+        CheckDie();
     }
-    
+
     protected virtual void CheckDie()
     {
         if (!isDead && hp <= 0) Die();
@@ -56,7 +66,7 @@ public abstract class Destructible : MonoBehaviour
         isDead = true;
 
         Death?.Invoke(new EntityDeathEventArgs());
-        
+
         Destroy(gameObject);
         return true;
     }

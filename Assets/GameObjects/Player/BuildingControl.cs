@@ -7,8 +7,8 @@ using UnityEngine;
 public class BuildingControl : MonoBehaviour
 {
     [CanBeNull] private PlaceableInfo _handBuildingInfo;
-    [SerializeField] private Transform buildingPreview;
-    [SerializeField] private bool canPlace;
+    [SerializeField] private BuildingPreview buildingPreview;
+    // [SerializeField] private bool canPlace = true;
 
     private void Start()
     {
@@ -20,18 +20,18 @@ public class BuildingControl : MonoBehaviour
         if (arg.NewItems?.item is null || arg.NewItems.item.GetType() != typeof(PlaceableInfo))
         {
             _handBuildingInfo = null;
-            UiManager.IsAimVisible = true;
+            buildingPreview.isActive = false;
             return;
         }
 
         _handBuildingInfo = (PlaceableInfo)arg.NewItems.item;
-        UiManager.IsAimVisible = false;
+        buildingPreview.isActive = true;
     }
 
     private void Update()
     {
         if (_handBuildingInfo is null) return;
-        buildingPreview.position = Building.GetNewBlockPosition(
+        buildingPreview.transform.position = Building.GetNewBlockPosition(
                 Camera.main.ScreenToWorldPoint(Input.mousePosition),
                 _handBuildingInfo.buildingPlaceMode);
         Placing();
@@ -40,13 +40,14 @@ public class BuildingControl : MonoBehaviour
 
     private void Placing()
     {
-        if (!canPlace && Input.GetAxis("Fire1") < 0.5f) canPlace = true;
-        if (!canPlace || Input.GetAxis("Fire1") < 0.5f) return;
+        // if (!canPlace && Input.GetAxis("Fire1") < 0.5f) canPlace = true;
+        // if (!canPlace || Input.GetAxis("Fire1") < 0.5f) return;
+        if (Input.GetAxis("Fire1") < 0.5f) return;
 
-        if (_handBuildingInfo is null) return;
+        if (_handBuildingInfo is null || !buildingPreview.CanPlace || !UiManager.CanShoot()) return;
 
         Building.Place(_handBuildingInfo, Camera.main.ScreenToWorldPoint(Input.mousePosition));
         
-        canPlace = false;
+        // canPlace = false;
     }
 }

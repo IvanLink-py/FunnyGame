@@ -18,6 +18,25 @@ public class UiManager : MonoBehaviour
 
     [Header("Aim")] [SerializeField] private Image aim;
 
+    public static bool IsAimVisible
+    {
+        get => _ui.isAimVisible;
+        set
+        {
+            if (value && CurrentState == UiState.Game)
+            {
+                _ui.isAimVisible = true;
+                _ui.aim.gameObject.SetActive(true);
+                return;
+            }
+            
+            _ui.isAimVisible = false;
+            _ui.aim.gameObject.SetActive(false);
+        }
+    }
+
+    [SerializeField] private bool isAimVisible;
+
     [Space] [Header("Inventory")] [SerializeField]
     private RectTransform inventory;
 
@@ -29,6 +48,7 @@ public class UiManager : MonoBehaviour
     public RectTransform cursorSlotPresentation;
     [Space] [Header("FloatingDamageInfo")] public GameObject damageDrawPrefab;
     [SerializeField] private float snapRadius = 0.2f; // Радус поиска ближайшей надписи при появлении новой 
+
 
     private void Awake()
     {
@@ -133,7 +153,7 @@ public class UiManager : MonoBehaviour
         inventory.gameObject.SetActive(InUi);
         invPresenter.UpdateSlots();
         Cursor.visible = InUi;
-        aim.gameObject.SetActive(!InUi);
+        IsAimVisible = !InUi;
         if (!InUi) cursorSlot.Drop(PlayerControl.Main.transform.position + PlayerControl.Main.Forward * 0.5f);
     }
 
@@ -144,6 +164,7 @@ public class UiManager : MonoBehaviour
 
     private void UpdateAimPos()
     {
+        if (!IsAimVisible) return;
         aim.rectTransform.position = Input.mousePosition;
     }
 

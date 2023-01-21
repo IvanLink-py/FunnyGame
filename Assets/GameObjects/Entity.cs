@@ -46,22 +46,6 @@ public class Entity : Destructible
     {
         DamageTake(-health, null, DamageType.Heal);
     }
-
-    public override void DamageTake(float damage, GameObject source, DamageType type)
-    {
-        var oldStat = (Hp: hp, Armor: armor);
-
-        base.DamageTake(damage, source, type);
-
-        GameManager.OnHit(new Damage(
-            source,
-            this,
-            type,
-            hp - oldStat.Hp,
-            armor - oldStat.Armor));
-
-        CheckDie();
-    }
     
     protected override bool Die()
     {

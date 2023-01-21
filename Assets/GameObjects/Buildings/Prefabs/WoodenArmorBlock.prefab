@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8567090685961462498}
   - component: {fileID: 8567090685961462497}
   - component: {fileID: 8567090685961462496}
+  - component: {fileID: 236066592812656522}
   m_Layer: 8
   m_Name: WoodenArmorBlock
   m_TagString: Building
@@ -111,3 +112,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &236066592812656522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8567090685961462511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f635a59087a328a44be2d05a1423e19f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 100
+  maxHp: 100
+  armor: 0
+  armorMax: 100
+  armorAbsorption: 0
+  isDead: 0

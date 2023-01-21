@@ -73,11 +73,11 @@ public class Damage
 
     public float HpAmount;
     [CanBeNull] public GameObject Source;
-    public Entity Target;
+    public Destructible Target;
 
     public DamageType Type;
 
-    public Damage([CanBeNull] GameObject source, Entity target, DamageType type, float hpAmount, float armorAmount)
+    public Damage([CanBeNull] GameObject source, Destructible target, DamageType type, float hpAmount, float armorAmount)
     {
         Type = type;
         HpAmount = hpAmount;

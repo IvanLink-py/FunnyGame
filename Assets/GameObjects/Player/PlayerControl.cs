@@ -6,6 +6,9 @@ using UnityEngine.Events;
 namespace GameObjects.Player
 {
     [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Inventory))]
+    [RequireComponent(typeof(ShotingManager))]
+    [RequireComponent(typeof(BuildingControl))]
     public class PlayerControl : RigidbodyEntity
     {
         public static PlayerControl Main;
@@ -25,9 +28,7 @@ namespace GameObjects.Player
 
         [Space(10)] [Header("Inventory")]
         public Inventory myInventory;
-
-        [SerializeField] private bool canPlace;
-
+        
         private new void Awake()
         {
             base.Awake();
@@ -56,29 +57,8 @@ namespace GameObjects.Player
         private void Update()
         {
             HotBarControl();
-            Placing();
         }
         
-        
-        private void Placing()
-        {
-            if (!canPlace && Input.GetAxis("Fire1") < 0.5f) canPlace = true;
-            if (!canPlace || Input.GetAxis("Fire1") < 0.5f) return;
-
-            if (myInventory.selectedHotBarSlot.Items is null ||
-                myInventory.selectedHotBarSlot.Items.item.GetType() != typeof(PlaceableInfo)) return;
-
-            var placeableInfo = (PlaceableInfo)myInventory.selectedHotBarSlot.Items.item;
-
-            var instantiate = Instantiate(placeableInfo.buildingPrefab);
-            
-            var transformPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transformPosition.z = 1;
-            instantiate.transform.position = transformPosition;
-            
-            canPlace = false;
-        }
-
         private void HotBarControl()    
         {
             for (var i = 0; i < 8; i++)

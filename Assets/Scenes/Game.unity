@@ -200,7 +200,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 31678233}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c3180bb415d9684fa0f68a14c0ee65c, type: 3}
   m_Name: 
@@ -369,7 +369,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115414869}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c3180bb415d9684fa0f68a14c0ee65c, type: 3}
   m_Name: 
@@ -638,6 +638,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 309740155}
   m_CullTransparentMesh: 1
+--- !u!4 &345093475 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8567090685961462498, guid: e5558fca569145e4db58be153ce95028, type: 3}
+  m_PrefabInstance: {fileID: 473297954}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &351593305
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -868,7 +873,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382778411}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c3180bb415d9684fa0f68a14c0ee65c, type: 3}
   m_Name: 
@@ -1051,6 +1056,83 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 453033282}
   m_CullTransparentMesh: 1
+--- !u!1001 &473297954
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8567090685961462496, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462497, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_Color.a
+      value: 0.48235294
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462497, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462497, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_Color.g
+      value: 0.7097946
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462497, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_Color.r
+      value: 0.097232126
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462498, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462498, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462498, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462498, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462498, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462498, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462498, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462498, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462498, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462498, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462498, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8567090685961462511, guid: e5558fca569145e4db58be153ce95028, type: 3}
+      propertyPath: m_Name
+      value: WoodenArmorBlock
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e5558fca569145e4db58be153ce95028, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2133,6 +2215,7 @@ GameObject:
   - component: {fileID: 1244890022}
   - component: {fileID: 1244890023}
   - component: {fileID: 1244890024}
+  - component: {fileID: 1244890025}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2269,7 +2352,6 @@ MonoBehaviour:
   gunFire: {fileID: 1017141892}
   startItems: {fileID: 11400000, guid: 99683d36caa4bc646aa6dca97c8dce4b, type: 2}
   myInventory: {fileID: 1244890023}
-  canPlace: 0
 --- !u!114 &1244890023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2311,6 +2393,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunFire: {fileID: 1017141892}
   currentGun: {fileID: 11400000, guid: 7c163f62e83dd20489afaab0266dc745, type: 2}
+--- !u!114 &1244890025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244890017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72a66de26d2948f0801c566200fc8710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingPreview: {fileID: 345093475}
+  canPlace: 0
 --- !u!1 &1376368702
 GameObject:
   m_ObjectHideFlags: 0
@@ -2425,6 +2521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heathManager: {fileID: 1401564798}
   aim: {fileID: 295369994}
+  isAimVisible: 0
   inventory: {fileID: 1928404495}
   invPresenter: {fileID: 1809703613}
   inventoryOpenKey: 9
@@ -3182,7 +3279,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1981831203}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c3180bb415d9684fa0f68a14c0ee65c, type: 3}
   m_Name: 

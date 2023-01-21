@@ -18,11 +18,11 @@ MonoBehaviour:
   stackSize: 10
   buildingPrefab: {fileID: 8567090685961462511, guid: e5558fca569145e4db58be153ce95028, type: 3}
   buildingPlaceMode:
-    gridSnap: 0
-    canHorizontalFlip: 0
-    canVerticalFlip: 0
-    can90deg: 0
-    can180deg: 0
-    can270deg: 0
+    gridSnap: 1
+    canHorizontalFlip: 1
+    canVerticalFlip: 1
+    can90deg: 1
+    can180deg: 1
+    can270deg: 1
     isRandom: 0
   buildDelay: 0

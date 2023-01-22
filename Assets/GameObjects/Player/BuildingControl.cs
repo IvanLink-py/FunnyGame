@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections;
 using GameObjects.Player;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -8,11 +8,14 @@ public class BuildingControl : MonoBehaviour
 {
     [CanBeNull] private PlaceableInfo _handBuildingInfo;
     [SerializeField] private BuildingPreview buildingPreview;
-    // [SerializeField] private bool canPlace = true;
+    [SerializeField] private bool canPlace = true;
+    private Inventory _inventory;
 
     private void Start()
     {
-        GetComponent<Inventory>().ActiveSlotContentChanged += OnActiveSlotContentChanged;
+        _inventory = GetComponent<Inventory>();
+        _inventory.ActiveSlotContentChanged += OnActiveSlotContentChanged;
+        canPlace = true;
     }
 
     private void OnActiveSlotContentChanged(InventoryActiveSlotContentChangedEventArgs arg)
@@ -40,14 +43,20 @@ public class BuildingControl : MonoBehaviour
 
     private void Placing()
     {
-        // if (!canPlace && Input.GetAxis("Fire1") < 0.5f) canPlace = true;
-        // if (!canPlace || Input.GetAxis("Fire1") < 0.5f) return;
-        if (Input.GetAxis("Fire1") < 0.5f) return;
+        if (!canPlace || Input.GetAxis("Fire1") < 0.5f) return;
 
         if (_handBuildingInfo is null || !buildingPreview.CanPlace || !UiManager.CanShoot()) return;
 
         Building.Place(_handBuildingInfo, Camera.main.ScreenToWorldPoint(Input.mousePosition));
         
-        // canPlace = false;
+        canPlace = false;
+        StartCoroutine(BuildDelay(_handBuildingInfo.buildDelay));
+    }
+
+    private IEnumerator BuildDelay(float delay)
+    {
+        _inventory.TryTake(_handBuildingInfo, 1);
+        yield return new WaitForSeconds(delay);
+        canPlace = true;
     }
 }

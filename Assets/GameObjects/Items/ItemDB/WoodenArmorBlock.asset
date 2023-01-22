@@ -25,4 +25,4 @@ MonoBehaviour:
     can180deg: 1
     can270deg: 1
     isRandom: 0
-  buildDelay: 0
+  buildDelay: 0.05

@@ -32,5 +32,5 @@ MonoBehaviour:
     maxAmount: 100
   - item: {fileID: 11400000, guid: 6dbfbbdde9f371e46b852f57c0498b48, type: 2}
     rare: 1
-    minAmount: 10
-    maxAmount: 10
+    minAmount: 50
+    maxAmount: 50

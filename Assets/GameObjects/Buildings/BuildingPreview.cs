@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BuildingPreview : MonoBehaviour
 {
     private readonly List<GameObject> _inTouch = new();
 
-    private (SpriteRenderer, Collider2D) _instance;
+    private (SpriteRenderer, Collider2D, Building) _instance;
     private SpriteRenderer _spriteRenderer;
 
     public bool CanPlace => isActive && !_inTouch.Any();
@@ -16,13 +17,7 @@ public class BuildingPreview : MonoBehaviour
 
     public Color allowColor = new(0, 72, 186, 0.8f);
     public Color disallowColor = new(255, 8, 0, 0.8f);
-
-    private void Awake()
-    {
-        // InitPreview();
-        
-    }
-
+    
     public void InstantiatePreview(GameObject prefab)
     {
         if (HavePreview) ClearPreview();
@@ -32,12 +27,14 @@ public class BuildingPreview : MonoBehaviour
 
     private void InitPreview()
     {
-        _instance = new ValueTuple<SpriteRenderer, Collider2D>(
+        _instance = new ValueTuple<SpriteRenderer, Collider2D, Building>(
             GetComponentInChildren<SpriteRenderer>(),
-            GetComponentInChildren<Collider2D>());
+            GetComponentInChildren<Collider2D>(),
+            GetComponentInChildren<Building>());
 
         _instance.Item2.isTrigger = true;
         _instance.Item1.transform.localScale *= 0.95f;
+        // _instance.Item3.enabled = false;
     }
 
     public void Materialize()
@@ -57,6 +54,7 @@ public class BuildingPreview : MonoBehaviour
         _instance.Item2.isTrigger = false;
         _instance.Item1.color = new Color(1, 1, 1, 1);
         _instance.Item1.transform.localScale /= 0.95f;
+        // _instance.Item3.enabled = true;
     }
 
 

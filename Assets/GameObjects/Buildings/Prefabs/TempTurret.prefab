@@ -120,3 +120,6 @@ MonoBehaviour:
   armorMax: 100
   armorAbsorption: 0
   isDead: 0
+  breakDrop: {fileID: 11400000, guid: ae495d880a5e3f1498a099ca4691c383, type: 2}
+  upDrop: {fileID: 11400000, guid: 0f2ffe3a1d87fa34d9900fa934580207, type: 2}
+  upTime: 1

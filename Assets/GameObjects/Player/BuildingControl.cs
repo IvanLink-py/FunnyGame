@@ -29,6 +29,7 @@ public class BuildingControl : MonoBehaviour
 
         _handBuildingInfo = (PlaceableInfo)arg.NewItems.item;
         buildingPreview.isActive = true;
+        buildingPreview.InstantiatePreview(_handBuildingInfo.buildingPrefab);
     }
 
     private void Update()
@@ -47,10 +48,19 @@ public class BuildingControl : MonoBehaviour
 
         if (_handBuildingInfo is null || !buildingPreview.CanPlace || !UiManager.CanShoot()) return;
 
-        Building.Place(_handBuildingInfo, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        Place();
         
         canPlace = false;
         StartCoroutine(BuildDelay(_handBuildingInfo.buildDelay));
+    }
+
+    private void Place()
+    {
+        if (_handBuildingInfo is null) return;
+        
+        // Building.Place(_handBuildingInfo, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        buildingPreview.Materialize();
+        buildingPreview.InstantiatePreview(_handBuildingInfo.buildingPrefab);
     }
 
     private IEnumerator BuildDelay(float delay)

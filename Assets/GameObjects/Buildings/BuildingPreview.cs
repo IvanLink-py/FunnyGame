@@ -34,11 +34,12 @@ public class BuildingPreview : MonoBehaviour
 
         _instance.Item2.isTrigger = true;
         _instance.Item1.transform.localScale *= 0.95f;
-        // _instance.Item3.enabled = false;
+        _instance.Item3.enabled = false;
     }
 
     public void Materialize()
     {
+        if (!HavePreview) return;
         _instance.Item1.transform.SetParent(null);
         DisposePreview();
     }
@@ -54,7 +55,7 @@ public class BuildingPreview : MonoBehaviour
         _instance.Item2.isTrigger = false;
         _instance.Item1.color = new Color(1, 1, 1, 1);
         _instance.Item1.transform.localScale /= 0.95f;
-        // _instance.Item3.enabled = true;
+        _instance.Item3.enabled = true;
     }
 
 
